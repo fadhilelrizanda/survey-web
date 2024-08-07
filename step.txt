@@ -1,0 +1,6 @@
+1. Create react vite project "npm create vite@latest"
+2. Import react router dom " npm install react-router-dom"
+3. import and install bootstrap "npm install bootstrap"
+4. npm install prop-types
+
+

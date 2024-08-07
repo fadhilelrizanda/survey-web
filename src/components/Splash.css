@@ -1,0 +1,14 @@
+/* src/components/Splash.css */
+
+.check_border{
+    border: 2px solid black;
+}
+
+.splash_img img{
+    height: 600px;
+}
+
+.splash_bg
+{
+    background-color: aqua;
+}
