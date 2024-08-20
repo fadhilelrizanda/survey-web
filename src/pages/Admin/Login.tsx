@@ -25,7 +25,9 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   return (
     <>
       <div className="container-fluid">
-        <Navbar />
+        <div className="row">
+          <Navbar />
+        </div>
       </div>
       <div className="container mt-5">
         <div className="row">

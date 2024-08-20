@@ -11,3 +11,13 @@
 .check_border{
     border: 2px solid black;
 }
+
+
+
+.text-section
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}

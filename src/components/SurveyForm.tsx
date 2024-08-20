@@ -1,20 +1,31 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { postAns } from "../services/api/apiData";
+import "./SurveyForm.css";
 
 interface SurveyFormProps {
-  questions: { [key: string]: number };
-  correct_answers: { [key: string]: number };
+  questions: Array<{
+    question: string;
+    questionType: number;
+    keyAnswer: number;
+  }>;
+  personalQuest: Array<{
+    question: string;
+    questionType: number;
+    surveyType: number;
+  }>;
 }
 
 interface FormValues {
   [key: string]: string;
 }
 
-function SurveyForm({ questions, correct_answers }: SurveyFormProps) {
+function SurveyForm({ questions, personalQuest }: SurveyFormProps) {
   const navigate = useNavigate();
-  const [score, setScore] = useState(0);
+  // const [score, setScore] = useState<number>(0);
   const [formValues, setFormValues] = useState<FormValues>({});
+  const [errors, setErrors] = useState<FormValues>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -24,64 +35,194 @@ function SurveyForm({ questions, correct_answers }: SurveyFormProps) {
     }));
   };
 
-  const check_answer = (
-    answer: { [key: string]: string },
-    correct_answers: { [key: string]: number }
-  ): number => {
-    let num_corrected_answer = 0;
-    for (const key in correct_answers) {
-      if (answer[key] !== undefined) {
-        if (Number(answer[key]) === correct_answers[key]) {
-          num_corrected_answer += 1;
-        }
+  const validateForm = (): boolean => {
+    const newErrors: FormValues = {};
+    let isValid = true;
+
+    // Check personalQuest fields
+    personalQuest.forEach((pq) => {
+      if (!formValues[pq.question]) {
+        newErrors[pq.question] = "This field is required";
+        isValid = false;
       }
-    }
-    return num_corrected_answer;
+    });
+
+    // Check questions fields
+    questions.forEach((__, index) => {
+      if (!formValues[`question${index + 1}`]) {
+        newErrors[`question${index + 1}`] = "This field is required";
+        isValid = false;
+      }
+    });
+
+    setErrors(newErrors);
+    return isValid;
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const checkAnswer = (
+    answer: { [key: string]: string },
+    correctAnswers: { [key: string]: number }
+  ): number => {
+    return Object.keys(correctAnswers).reduce((count, key) => {
+      return answer[key] === String(correctAnswers[key]) ? count + 1 : count;
+    }, 0);
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form values:", formValues);
 
-    // Clone the form values to avoid mutating the original state
-    const updatedValues = { ...formValues };
+    if (!validateForm()) return;
 
-    // Remove a specific property safely
-    delete updatedValues["question0"];
+    const correctAnswers = questions.reduce((acc, q, index) => {
+      acc[`question${index + 1}`] = q.keyAnswer;
+      return acc;
+    }, {} as { [key: string]: number });
 
-    console.log("Updated form values:", updatedValues);
-    const get_score = check_answer(updatedValues, correct_answers);
-    setScore(get_score);
+    const getScore = checkAnswer(formValues, correctAnswers);
+    // setScore(getScore);
 
-    console.log("Number of correct answers:", get_score);
-    navigate("/success", { state: { score: get_score } });
+    const ans = questions.map(
+      (_, index) => Number(formValues[`question${index + 1}`]) || 0
+    );
+
+    const pq = personalQuest.reduce((acc, pq) => {
+      acc[pq.question] = formValues[pq.question] || "";
+      return acc;
+    }, {} as { [key: string]: string });
+
+    try {
+      await postAns({
+        pq,
+        ans,
+        score: getScore,
+        surveyType: 0,
+      });
+      navigate("/success", { state: { score: getScore } });
+    } catch (error) {
+      console.error("Error posting answers:", error);
+      // Handle error state here (e.g., show an error message)
+    }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      {Object.entries(questions).map(([question, type], index) => (
-        <div key={index} className="form-group mt-4">
-          <label>{question}</label>
-          {type === 0 ? (
-            <input
-              type="text"
-              className="form-control"
-              name={`question${index + 1}`} // Adjusted to start from question1
-              placeholder="Masukkan jawaban"
-              onChange={handleChange}
-              required
-            />
-          ) : (
+      {personalQuest.map((pq, index) => (
+        <div key={index + questions.length} className="form-group mt-4">
+          <label>
+            {index + 1}. {pq.question}
+          </label>
+          {pq.questionType === 0 && (
             <>
-              <div className="form-check">
+              <input
+                type="text"
+                className="form-control"
+                name={pq.question}
+                placeholder="Masukkan jawaban"
+                onChange={handleChange}
+                value={formValues[pq.question] || ""}
+              />
+              {errors[pq.question] && (
+                <p className="text-danger">{errors[pq.question]}</p>
+              )}
+            </>
+          )}
+          {pq.questionType === 1 && (
+            <div className="radio-group">
+              <div className="custom-radio">
                 <input
                   className="form-check-input"
                   type="radio"
-                  name={`question${index + 1}`} // Adjusted to start from question1
+                  name={pq.question}
+                  id={`male-${index}`}
+                  value="male"
+                  onChange={handleChange}
+                  checked={formValues[pq.question] === "male"}
+                />
+                <label className="form-check-label" htmlFor={`male-${index}`}>
+                  Male
+                </label>
+              </div>
+              <div className="custom-radio">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name={pq.question}
+                  id={`female-${index}`}
+                  value="female"
+                  onChange={handleChange}
+                  checked={formValues[pq.question] === "female"}
+                />
+                <label className="form-check-label" htmlFor={`female-${index}`}>
+                  Female
+                </label>
+              </div>
+              {errors[pq.question] && (
+                <p className="text-danger">{errors[pq.question]}</p>
+              )}
+            </div>
+          )}
+          {pq.questionType === 2 && (
+            <>
+              <input
+                type="number"
+                className="form-control"
+                name={pq.question}
+                placeholder="Masukkan usia"
+                onChange={handleChange}
+                value={formValues[pq.question] || ""}
+              />
+              {errors[pq.question] && (
+                <p className="text-danger">{errors[pq.question]}</p>
+              )}
+            </>
+          )}
+          {pq.questionType === 3 && (
+            <>
+              <input
+                type="date"
+                className="form-control"
+                name={pq.question}
+                onChange={handleChange}
+                value={formValues[pq.question] || ""}
+              />
+              {errors[pq.question] && (
+                <p className="text-danger">{errors[pq.question]}</p>
+              )}
+            </>
+          )}
+        </div>
+      ))}
+
+      {questions.map((q, index) => (
+        <div key={index} className="form-group mt-4">
+          <label>
+            {index + 1}. {q.question}
+          </label>
+          {q.questionType === 2 ? (
+            <>
+              <input
+                type="text"
+                className="form-control"
+                name={`question${index + 1}`}
+                placeholder="Masukkan jawaban"
+                onChange={handleChange}
+                value={formValues[`question${index + 1}`] || ""}
+              />
+              {errors[`question${index + 1}`] && (
+                <p className="text-danger">{errors[`question${index + 1}`]}</p>
+              )}
+            </>
+          ) : (
+            <div className="radio-group">
+              <div className="custom-radio">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name={`question${index + 1}`}
                   id={`question${index + 1}Yes`}
                   value="1"
                   onChange={handleChange}
-                  required
+                  checked={formValues[`question${index + 1}`] === "1"}
                 />
                 <label
                   className="form-check-label"
@@ -90,15 +231,15 @@ function SurveyForm({ questions, correct_answers }: SurveyFormProps) {
                   Iya
                 </label>
               </div>
-              <div className="form-check">
+              <div className="custom-radio">
                 <input
                   className="form-check-input"
                   type="radio"
-                  name={`question${index + 1}`} // Adjusted to start from question1
+                  name={`question${index + 1}`}
                   id={`question${index + 1}No`}
                   value="0"
                   onChange={handleChange}
-                  required
+                  checked={formValues[`question${index + 1}`] === "0"}
                 />
                 <label
                   className="form-check-label"
@@ -107,10 +248,14 @@ function SurveyForm({ questions, correct_answers }: SurveyFormProps) {
                   Tidak
                 </label>
               </div>
-            </>
+              {errors[`question${index + 1}`] && (
+                <p className="text-danger">{errors[`question${index + 1}`]}</p>
+              )}
+            </div>
           )}
         </div>
       ))}
+
       <button type="submit" className="btn btn-primary mt-4">
         Submit
       </button>
@@ -119,8 +264,8 @@ function SurveyForm({ questions, correct_answers }: SurveyFormProps) {
 }
 
 SurveyForm.propTypes = {
-  questions: PropTypes.object.isRequired,
-  correct_answers: PropTypes.object.isRequired,
+  questions: PropTypes.array.isRequired,
+  personalQuest: PropTypes.array.isRequired,
 };
 
 export default SurveyForm;

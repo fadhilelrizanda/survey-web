@@ -5,7 +5,9 @@ const Dashboard = () => {
   return (
     <>
       <div className="container-fluid">
-        <Navbar />
+        <div className="row">
+          <Navbar />
+        </div>
       </div>
       <div className="container-fluid border-hightlight mt-5">
         <div className="row">

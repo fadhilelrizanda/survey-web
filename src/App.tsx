@@ -10,8 +10,8 @@ import SurveyPeriksa from "./pages/Survey/SurveyPeriksa";
 import Success from "./pages/Survey/Success";
 import ProtectedRoute from "./pages/Admin/ProtectedRoute";
 import Login from "./pages/Admin/Login";
-import Dashboard from "./pages/Admin/Dashboard";
 import AdminSurveySusu from "./pages/Admin/AdminSurveySusu";
+import AdminPolaAsuh from "./pages/Admin/AdminPolaAsuh";
 
 const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -28,7 +28,7 @@ const App: React.FC = () => {
       const storedAuthStatus = localStorage.getItem("isAuthenticated");
       setIsAuthenticated(storedAuthStatus === "true");
       setIsLoading(false);
-    }, 0); // Adjust the timeout as needed
+    }, 3000); // Adjust the timeout as needed
 
     return () => clearTimeout(timer);
   }, []);
@@ -45,7 +45,7 @@ const App: React.FC = () => {
               path="/admin"
               element={
                 <ProtectedRoute isAuthenticated={isAuthenticated}>
-                  <Dashboard />
+                  <AdminSurveySusu />
                 </ProtectedRoute>
               }
             />
@@ -54,6 +54,14 @@ const App: React.FC = () => {
               element={
                 <ProtectedRoute isAuthenticated={isAuthenticated}>
                   <AdminSurveySusu />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/survey pola asuh"
+              element={
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  <AdminPolaAsuh />
                 </ProtectedRoute>
               }
             />

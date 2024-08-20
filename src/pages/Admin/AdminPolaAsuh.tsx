@@ -4,7 +4,6 @@ import Sidebar from "../../components/Sidebar";
 import QuestionEntry from "../../components/QuestionEntry";
 import UpdateModal from "../../components/UpdateModal";
 import PersonalQuestion from "../../components/PersonalQuestion";
-import "./AdminSurveySusu.css";
 import {
   getAllQuestion,
   deleteQuestion,
@@ -14,12 +13,6 @@ import {
   gettAllAns,
   deleteAns,
 } from "../../services/api/apiData";
-import Chart from "chart.js/auto";
-import { CategoryScale } from "chart.js";
-import PieChart from "../../components/PieChart";
-import StackedBarChart from "../../components/StackedBarChart";
-
-Chart.register(CategoryScale);
 
 interface AnswerData {
   _id: string;
@@ -29,7 +22,7 @@ interface AnswerData {
   surveyType: number;
 }
 
-const AdminSurveySusu: React.FC = () => {
+const AdminPolaAsuh: React.FC = () => {
   const [questions, setQuestions] = useState<any[]>([]);
   const [personalQuest, setPersonalQuest] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -37,33 +30,8 @@ const AdminSurveySusu: React.FC = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [currentQuestion, setCurrentQuestion] = useState<any>(null);
   const [answerData, setAnswerData] = useState<AnswerData[]>([]);
-  // Pie chart data state
-  const [pieChartData, setPieChartData] = useState({
-    labels: [] as string[], // Labels for the pie chart
-    datasets: [
-      {
-        label: "Score Distribution",
-        data: [] as number[], // Data for the pie chart
-        backgroundColor: [
-          "rgba(75,192,192,1)",
-          "rgba(255,99,132,1)",
-          "rgba(54,162,235,1)",
-          "rgba(255,206,86,1)",
-          "rgba(153,102,255,1)",
-        ],
-        borderColor: "black",
-        borderWidth: 2,
-      },
-    ],
-  });
 
-  // Stacked bar chart data state
-  const [stackedBarChartData, setStackedBarChartData] = useState({
-    labels: [] as string[], // Labels for the x-axis
-    datasets: [] as any[], // Datasets for the stacked bar chart
-  });
-
-  const surveyCode = 0;
+  const surveyCode = 1;
   const PersonalQuestType = ["Text", "Jenis Kelamin", "Angka", "Tanggal"]; // Adjusted types for Personal Questions
   const questAns = [
     ["Tidak", "Iya"],
@@ -82,79 +50,17 @@ const AdminSurveySusu: React.FC = () => {
     try {
       const data = await getAllQuestion(surveyCode);
       const dataPersonal = await getAllPersonalQuestion(surveyCode);
-      const dataAns = await gettAllAns(surveyCode);
-
-      console.log("Raw Questions Data:", data);
-      console.log("Raw Personal Questions Data:", dataPersonal);
-      console.log("Raw Answers Data:", dataAns);
-
+      const dataAns = await gettAllAns(surveyCode); //
       const formattedDataAns = dataAns.map((item: any) => ({
         ...item,
         pq: Object.fromEntries(
           Object.entries(item.pq).map(([key, value]) => [key, value])
         ),
       }));
-      console.log("Formatted Answers Data:", formattedDataAns);
+      setAnswerData(formattedDataAns);
 
       setQuestions(data);
       setPersonalQuest(dataPersonal);
-      setAnswerData(formattedDataAns);
-
-      // Calculate the score distribution for the pie chart
-      const scoreDistribution: { [key: number]: number } = {};
-      formattedDataAns.forEach((ans: AnswerData) => {
-        scoreDistribution[ans.score] = (scoreDistribution[ans.score] || 0) + 1;
-      });
-      console.log("Score Distribution:", scoreDistribution);
-
-      setPieChartData({
-        labels: Object.keys(scoreDistribution).map(
-          (score) => `Score: ${score}`
-        ),
-        datasets: [
-          {
-            ...pieChartData.datasets[0],
-            data: Object.values(scoreDistribution),
-          },
-        ],
-      });
-      console.log("Pie Chart Data:", pieChartData);
-
-      // Prepare data for the stacked bar chart
-      const numQuestions = 20; // Set this according to the number of questions
-      const stackedBarData = [
-        {
-          label: "Iya",
-          data: Array(numQuestions).fill(0),
-          backgroundColor: "rgba(75, 192, 192, 0.6)", // Color for "iya"
-        },
-        {
-          label: "Tidak",
-          data: Array(numQuestions).fill(0),
-          backgroundColor: "rgba(153, 102, 255, 0.6)", // Color for "tidak"
-        },
-      ];
-
-      // Count the occurrences of each answer for each question
-      formattedDataAns.forEach((ans: AnswerData) => {
-        ans.ans.forEach((answer, qIndex) => {
-          if (qIndex < numQuestions) {
-            if (answer === 0) {
-              stackedBarData[1].data[qIndex] += 1; // "Tidak"
-            } else if (answer === 1) {
-              stackedBarData[0].data[qIndex] += 1; // "Iya"
-            }
-          }
-        });
-      });
-
-      setStackedBarChartData({
-        labels: Array.from(
-          { length: numQuestions },
-          (_, index) => `Question ${index + 1}`
-        ),
-        datasets: stackedBarData,
-      });
     } catch (error) {
       setError("Failed to fetch questions");
     } finally {
@@ -233,34 +139,19 @@ const AdminSurveySusu: React.FC = () => {
       <div className="container-fluid border-highlight mt-5">
         <div className="row">
           <Sidebar />
-          <div className="col-md-10 border-highlight content">
-            <h3 className="mt-5 text-center">Survey Pemberian Susu</h3>
-            <div className="row mt-5">
-              <h4 className="text-center mt-2 mb-5">Statistic Survey</h4>
-              <div className="col-md-3">
-                <div className="graph">
-                  <PieChart
-                    chartData={pieChartData}
-                    text_data={"Statistik Persebaran Score"}
-                  />
-                </div>
-              </div>
-              <div className="col-md-8">
-                <div className="graph">
-                  <StackedBarChart data={stackedBarChartData} />
-                </div>
-              </div>
-            </div>
-
+          <div className="col-md-10 border-highlight">
+            <h3>
+              Survey Pola Asuh Orang tua Terhadap Kejadian Karies Gigi Pada Anak
+            </h3>
             <button className="btn btn-primary">List Data</button>
             <table className="table table-striped table-hover">
               <thead>
                 <tr>
                   <th scope="col">No.</th>
                   <th scope="col">Data personal</th>
-                  {/* <th scope="col">Jawaban</th> */}
+                  <th scope="col">Jawaban</th>
                   <th scope="col">Score</th>
-                  {/* <th scope="col">Survey</th> */}
+                  <th scope="col">Survey</th>
                   <th scope="col">Action</th>
                 </tr>
               </thead>
@@ -275,9 +166,9 @@ const AdminSurveySusu: React.FC = () => {
                         </div>
                       ))}
                     </td>
-                    {/* <td>{ans.ans.join(", ")}</td> */}
+                    <td>{ans.ans.join(", ")}</td>
                     <td>{ans.score}</td>
-                    {/* <td>{ans.surveyType}</td> */}
+                    <td>{ans.surveyType}</td>
                     <td>
                       {" "}
                       <button
@@ -396,4 +287,4 @@ const AdminSurveySusu: React.FC = () => {
   );
 };
 
-export default AdminSurveySusu;
+export default AdminPolaAsuh;

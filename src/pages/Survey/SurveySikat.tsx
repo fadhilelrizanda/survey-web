@@ -1,3 +1,4 @@
+import BackBtn from "../../components/BackBtn";
 import Navbar from "../../components/Navbar";
 import SurveyForm from "../../components/SurveyForm";
 const questions = {
@@ -20,9 +21,12 @@ function SurveySikat() {
   return (
     <>
       <div className="container-fluid">
-        <Navbar />
+        <div className="row">
+          <Navbar />
+        </div>
       </div>
       <div className="container mt-5">
+        <BackBtn />
         <div className="row card-survey justify-content-center mt-5">
           <h3 className="mb-5">Survey Menyikat Gigi</h3>
           <SurveyForm questions={questions} correct_answers={correct_answers} />

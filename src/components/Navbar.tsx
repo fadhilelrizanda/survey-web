@@ -1,11 +1,15 @@
 import { Link } from "react-router-dom";
+import Logo from "../assets/images/logo-removebg.png";
+import "./Navbar.css";
+
 function Navbar() {
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <a className="navbar-brand" href="#">
-          [Logo] ECC Dentch
-        </a>
+      <nav className="navbar navbar-expand-lg">
+        <Link className="navbar-brand" to="/">
+          <img className="logoNav" src={Logo} alt="Logo" />
+        </Link>
+
         <button
           className="navbar-toggler"
           type="button"
@@ -21,16 +25,16 @@ function Navbar() {
           className="collapse navbar-collapse justify-content-end"
           id="navbarNavAltMarkup"
         >
-          <div className="navbar-nav ml-auto">
-            <Link to="/">
-              <a className="nav-item nav-link">Home</a>
+          <div className="navbar-nav">
+            <Link to="/" className="nav-item nav-link border-item">
+              Home
             </Link>
-            <Link to="/survey">
-              <a className="nav-item nav-link">Survey</a>
+            <Link to="/survey" className="nav-item nav-link">
+              Survey
             </Link>
-            <a className="nav-item nav-link" href="#">
+            <Link to="/login" className="nav-item nav-link">
               Login
-            </a>
+            </Link>
           </div>
         </div>
       </nav>

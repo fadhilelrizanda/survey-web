@@ -1,78 +1,78 @@
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
+import imgMilk from "../assets/images/survey/Milk.jpg";
+// import imgBrush from "../assets/images/survey/menyikat.png";
+import imgParenting from "../assets/images/survey/parenting.png";
+import imgTeeth from "../assets/images/survey/Teeth.png";
 function Survey() {
   return (
     <>
       <div className="container-fluid">
-        <Navbar />
+        <div className="row">
+          <Navbar />
+        </div>
       </div>
       <div className="container mt-5">
         <div className="row card-survey justify-content-center mt-5">
           <h3 className="mb-5">Pilih survey yang ingin anda lakukan</h3>
-          <div className="card col-3">
-            <img
-              className="card-img-top"
-              src=".../100px180/?text=Image cap"
-              alt="Card image cap"
-            />
+          <div className="card col-3 mx-3">
+            <img className="card-img-top" src={imgMilk} alt="Card image cap" />
             <div className="card-body">
               <p className="card-text">
                 <h4>Survey Pemberian Susu Formula</h4>
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
+                <p>
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.
+                </p>
                 <Link to="/surveya">
-                  <button>Ambil Survey</button>
+                  <button className="btn btn-primary">Ambil Survey</button>
                 </Link>
               </p>
             </div>
           </div>
-          <div className="card col-3">
-            <img
-              className="card-img-top"
-              src=".../100px180/?text=Image cap"
-              alt="Card image cap"
-            />
+          {/* <div className="card col-3">
+            <img className="card-img-top" src={imgBrush} alt="Card image cap" />
             <div className="card-body">
               <p className="card-text">
                 <h4>Survey Menyikat Gigi</h4>
                 Some quick example text to build on the card title and make up
                 the bulk of the card's content.
                 <Link to="/surveyb">
-                  <button>Ambil Survey</button>
+                  <button className="btn btn-primary">Ambil Survey</button>
                 </Link>
               </p>
             </div>
-          </div>
-          <div className="card col-3">
+          </div> */}
+          <div className="card col-3 mx-3">
             <img
               className="card-img-top"
-              src=".../100px180/?text=Image cap"
+              src={imgParenting}
               alt="Card image cap"
             />
             <div className="card-body">
               <p className="card-text">
                 <h4>Survey Pola Asuh Orangtua</h4>
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.{" "}
+                <p>
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.{" "}
+                </p>
                 <Link to="/surveyc">
-                  <button>Ambil Survey</button>
+                  <button className="btn btn-primary">Ambil Survey</button>
                 </Link>
               </p>
             </div>
           </div>
-          <div className="card col-3">
-            <img
-              className="card-img-top"
-              src=".../100px180/?text=Image cap"
-              alt="Card image cap"
-            />
+          <div className="card col-3 mx-3">
+            <img className="card-img-top" src={imgTeeth} alt="Card image cap" />
             <div className="card-body">
               <p className="card-text">
-                <h4>Survey Pola Periksa Gigi</h4>
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.{" "}
+                <h4>Survey Pola Asuh Orang Tua 2</h4>
+                <p>
+                  Some quick example text to build on the card title and make up
+                  the bulk of the card's content.{" "}
+                </p>
                 <Link to="/surveyd">
-                  <button>Ambil Survey</button>
+                  <button className="btn btn-primary">Ambil Survey</button>
                 </Link>
               </p>
             </div>

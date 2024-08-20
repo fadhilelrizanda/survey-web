@@ -1,0 +1,31 @@
+.radio-group {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .custom-radio {
+    position: relative;
+  }
+  
+  .custom-radio input[type="radio"] {
+    display: none;
+  }
+  
+  .custom-radio label {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    cursor: pointer;
+  }
+  
+  .custom-radio input[type="radio"]:checked + label {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+  }
+  
+  .custom-radio label:hover {
+    background-color: #e0e0e0;
+  }
+  
