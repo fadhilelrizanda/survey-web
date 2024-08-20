@@ -18,16 +18,14 @@ function Survey() {
           <div className="card col-3 mx-3">
             <img className="card-img-top" src={imgMilk} alt="Card image cap" />
             <div className="card-body">
+              <h4>Survey Pemberian Susu Formula</h4>
               <p className="card-text">
-                <h4>Survey Pemberian Susu Formula</h4>
-                <p>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </p>
-                <Link to="/surveya">
-                  <button className="btn btn-primary">Ambil Survey</button>
-                </Link>
+                Some quick example text to build on the card title and make up
+                the bulk of the card's content.
               </p>
+              <Link to="/surveya">
+                <button className="btn btn-primary">Ambil Survey</button>
+              </Link>
             </div>
           </div>
           {/* <div className="card col-3">
@@ -50,31 +48,27 @@ function Survey() {
               alt="Card image cap"
             />
             <div className="card-body">
+              <h4>Survey Pola Asuh Orangtua</h4>
               <p className="card-text">
-                <h4>Survey Pola Asuh Orangtua</h4>
-                <p>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.{" "}
-                </p>
-                <Link to="/surveyc">
-                  <button className="btn btn-primary">Ambil Survey</button>
-                </Link>
+                Some quick example text to build on the card title and make up
+                the bulk of the card's content.{" "}
               </p>
+              <Link to="/surveyc">
+                <button className="btn btn-primary">Ambil Survey</button>
+              </Link>
             </div>
           </div>
           <div className="card col-3 mx-3">
             <img className="card-img-top" src={imgTeeth} alt="Card image cap" />
             <div className="card-body">
+              <h4>Survey Pola Asuh Orang Tua 2</h4>
               <p className="card-text">
-                <h4>Survey Pola Asuh Orang Tua 2</h4>
-                <p>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.{" "}
-                </p>
-                <Link to="/surveyd">
-                  <button className="btn btn-primary">Ambil Survey</button>
-                </Link>
+                Some quick example text to build on the card title and make up
+                the bulk of the card's content.{" "}
               </p>
+              <Link to="/surveyd">
+                <button className="btn btn-primary">Ambil Survey</button>
+              </Link>
             </div>
           </div>
         </div>

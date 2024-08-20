@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Define the base URL for your API
-const API_BASE_URL = "http://localhost:5000"; // Adjust as needed
+const API_BASE_URL = "https://survey-web-api.vercel.app"; // Adjust as needed
 
 const api = axios.create({
   baseURL: API_BASE_URL,

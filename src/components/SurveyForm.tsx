@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { postAns } from "../services/api/apiData";
 import "./SurveyForm.css";
+import TextInput from "./PersonalQuest/TextInput";
+import RadioInput from "./PersonalQuest/RadioInput";
 
 interface SurveyFormProps {
   questions: Array<{
@@ -113,81 +115,47 @@ function SurveyForm({ questions, personalQuest }: SurveyFormProps) {
           </label>
           {pq.questionType === 0 && (
             <>
-              <input
-                type="text"
-                className="form-control"
+              <TextInput
                 name={pq.question}
-                placeholder="Masukkan jawaban"
-                onChange={handleChange}
                 value={formValues[pq.question] || ""}
+                placeholder={"Masukkan jawaban"}
+                onChange={handleChange}
+                error={errors[pq.question]}
               />
-              {errors[pq.question] && (
-                <p className="text-danger">{errors[pq.question]}</p>
-              )}
             </>
           )}
           {pq.questionType === 1 && (
-            <div className="radio-group">
-              <div className="custom-radio">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name={pq.question}
-                  id={`male-${index}`}
-                  value="male"
-                  onChange={handleChange}
-                  checked={formValues[pq.question] === "male"}
-                />
-                <label className="form-check-label" htmlFor={`male-${index}`}>
-                  Male
-                </label>
-              </div>
-              <div className="custom-radio">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name={pq.question}
-                  id={`female-${index}`}
-                  value="female"
-                  onChange={handleChange}
-                  checked={formValues[pq.question] === "female"}
-                />
-                <label className="form-check-label" htmlFor={`female-${index}`}>
-                  Female
-                </label>
-              </div>
-              {errors[pq.question] && (
-                <p className="text-danger">{errors[pq.question]}</p>
-              )}
-            </div>
+            <RadioInput
+              name={pq.question}
+              value={formValues[pq.question] || ""}
+              options={[
+                { label: "Male", value: "male" },
+                { label: "Female", value: "female" },
+              ]}
+              onChange={handleChange}
+              error={errors[pq.question]}
+            />
           )}
           {pq.questionType === 2 && (
             <>
-              <input
-                type="number"
-                className="form-control"
+              <TextInput
                 name={pq.question}
+                value={formValues[pq.question] || ""}
                 placeholder="Masukkan usia"
                 onChange={handleChange}
-                value={formValues[pq.question] || ""}
+                error={errors[pq.question]}
               />
-              {errors[pq.question] && (
-                <p className="text-danger">{errors[pq.question]}</p>
-              )}
             </>
           )}
           {pq.questionType === 3 && (
             <>
-              <input
-                type="date"
-                className="form-control"
+              <TextInput
                 name={pq.question}
-                onChange={handleChange}
                 value={formValues[pq.question] || ""}
+                placeholder="Select Date"
+                onChange={handleChange}
+                error={errors[pq.question]}
               />
-              {errors[pq.question] && (
-                <p className="text-danger">{errors[pq.question]}</p>
-              )}
             </>
           )}
         </div>
@@ -199,59 +167,24 @@ function SurveyForm({ questions, personalQuest }: SurveyFormProps) {
             {index + 1}. {q.question}
           </label>
           {q.questionType === 2 ? (
-            <>
-              <input
-                type="text"
-                className="form-control"
-                name={`question${index + 1}`}
-                placeholder="Masukkan jawaban"
-                onChange={handleChange}
-                value={formValues[`question${index + 1}`] || ""}
-              />
-              {errors[`question${index + 1}`] && (
-                <p className="text-danger">{errors[`question${index + 1}`]}</p>
-              )}
-            </>
+            <TextInput
+              name={`question${index + 1}`}
+              value={formValues[`question${index + 1}`] || ""}
+              placeholder="Masukkan jawaban"
+              onChange={handleChange}
+              error={errors[`question${index + 1}`]}
+            />
           ) : (
-            <div className="radio-group">
-              <div className="custom-radio">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name={`question${index + 1}`}
-                  id={`question${index + 1}Yes`}
-                  value="1"
-                  onChange={handleChange}
-                  checked={formValues[`question${index + 1}`] === "1"}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor={`question${index + 1}Yes`}
-                >
-                  Iya
-                </label>
-              </div>
-              <div className="custom-radio">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name={`question${index + 1}`}
-                  id={`question${index + 1}No`}
-                  value="0"
-                  onChange={handleChange}
-                  checked={formValues[`question${index + 1}`] === "0"}
-                />
-                <label
-                  className="form-check-label"
-                  htmlFor={`question${index + 1}No`}
-                >
-                  Tidak
-                </label>
-              </div>
-              {errors[`question${index + 1}`] && (
-                <p className="text-danger">{errors[`question${index + 1}`]}</p>
-              )}
-            </div>
+            <RadioInput
+              name={`question${index + 1}`}
+              value={formValues[`question${index + 1}`] || ""}
+              options={[
+                { label: "Iya", value: "1" },
+                { label: "Tidak", value: "0" },
+              ]}
+              onChange={handleChange}
+              error={errors[`question${index + 1}`]}
+            />
           )}
         </div>
       ))}
