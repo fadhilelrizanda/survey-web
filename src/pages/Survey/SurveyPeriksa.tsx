@@ -1,13 +1,13 @@
 import BackBtn from "../../components/BackBtn";
 import Navbar from "../../components/Navbar";
-import SurveyForm from "../../components/SurveyForm";
+// import SurveyForm from "../../components/SurveyForm";
 
-const questions = {
-  "1. Nama Lengkap": 0,
-  "2. Apakah Anda ...?": 1,
-  "3. Apakah Anda ...?": 1,
-  "4. Apakah Anda ...?": 1,
-};
+// const questions = {
+//   "1. Nama Lengkap": 0,
+//   "2. Apakah Anda ...?": 1,
+//   "3. Apakah Anda ...?": 1,
+//   "4. Apakah Anda ...?": 1,
+// };
 
 function SurveyPeriksa() {
   return (
