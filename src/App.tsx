@@ -11,7 +11,7 @@ import Success from "./pages/Survey/SuccessSusu";
 import ProtectedRoute from "./pages/Admin/ProtectedRoute";
 import Login from "./pages/Admin/Login";
 import AdminSurveySusu from "./pages/Admin/AdminSurveySusu";
-import AdminPolaAsuh from "./pages/Admin/AdminPolaAsuh";
+// import AdminPolaAsuh from "./pages/Admin/AdminPolaAsuh";
 import { AdminMenyikatGigi } from "./pages/Admin/AdminMenyikat";
 
 const App: React.FC = () => {
