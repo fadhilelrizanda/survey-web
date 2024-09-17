@@ -10,20 +10,22 @@ interface SurveyFormProps {
   questions: Array<{
     question: string;
     questionType: number;
+    score: number;
     keyAnswer: number;
   }>;
-  personalQuest: Array<{
-    question: string;
-    questionType: number;
-    surveyType: number;
-  }>;
+  // personalQuest: Array<{
+  //   question: string;
+  //   questionType: number;
+  //   surveyType: number;
+  // }>;
+  surveyType: number;
 }
 
 interface FormValues {
   [key: string]: string;
 }
 
-function SurveyForm({ questions, personalQuest }: SurveyFormProps) {
+function SurveyForm({ questions, surveyType }: SurveyFormProps) {
   const navigate = useNavigate();
   // const [score, setScore] = useState<number>(0);
   const [formValues, setFormValues] = useState<FormValues>({});
@@ -42,12 +44,12 @@ function SurveyForm({ questions, personalQuest }: SurveyFormProps) {
     let isValid = true;
 
     // Check personalQuest fields
-    personalQuest.forEach((pq) => {
-      if (!formValues[pq.question]) {
-        newErrors[pq.question] = "This field is required";
-        isValid = false;
-      }
-    });
+    // personalQuest.forEach((pq) => {
+    //   if (!formValues[pq.question]) {
+    //     newErrors[pq.question] = "This field is required";
+    //     isValid = false;
+    //   }
+    // });
 
     // Check questions fields
     questions.forEach((__, index) => {
@@ -63,11 +65,13 @@ function SurveyForm({ questions, personalQuest }: SurveyFormProps) {
 
   const checkAnswer = (
     answer: { [key: string]: string },
-    correctAnswers: { [key: string]: number }
+    correctAnswers: { [key: string]: number },
+    scores: { [key: string]: number } // Add this to represent the score for each question
   ): number => {
-    return Object.keys(correctAnswers).reduce((count, key) => {
-      return answer[key] === String(correctAnswers[key]) ? count + 1 : count;
-    }, 0);
+    return Object.keys(correctAnswers).reduce((totalScore, key) => {
+      const isCorrect = answer[key] === String(correctAnswers[key]); // Check if the answer is correct
+      return totalScore + (isCorrect ? scores[key] : 0); // Add the corresponding score if the answer is correct
+    }, 0); // Initialize the total score to 0
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -80,26 +84,47 @@ function SurveyForm({ questions, personalQuest }: SurveyFormProps) {
       return acc;
     }, {} as { [key: string]: number });
 
-    const getScore = checkAnswer(formValues, correctAnswers);
-    // setScore(getScore);
+    const correctScore = questions.reduce((acc, q, index) => {
+      acc[`question${index + 1}`] = q.score;
+      return acc;
+    }, {} as { [key: string]: number });
+    console.log(correctScore);
 
+    const getScore = checkAnswer(formValues, correctAnswers, correctScore);
+    // setScore(getScore);
+    console.log(getScore);
     const ans = questions.map(
       (_, index) => Number(formValues[`question${index + 1}`]) || 0
     );
-
-    const pq = personalQuest.reduce((acc, pq) => {
-      acc[pq.question] = formValues[pq.question] || "";
-      return acc;
-    }, {} as { [key: string]: string });
+    const userId = sessionStorage.getItem("userId") || "";
+    // const pq = personalQuest.reduce((acc, pq) => {
+    //   acc[pq.question] = formValues[pq.question] || "";
+    //   return acc;
+    // }, {} as { [key: string]: string });
 
     try {
       await postAns({
-        pq,
+        // pq,
         ans,
         score: getScore,
-        surveyType: 0,
+        surveyType: surveyType,
+        userId: userId,
       });
-      navigate("/success", { state: { score: getScore } });
+      switch (surveyType) {
+        case 0:
+          sessionStorage.setItem("s0Score", getScore.toString());
+          navigate("/success");
+          break;
+        case 1:
+          sessionStorage.setItem("s1Score", getScore.toString());
+          navigate("/success");
+          break;
+        case 2:
+          sessionStorage.setItem("s2Score", getScore.toString());
+          navigate("/success");
+          break;
+      }
+      // navigate("/success", { state: { score: getScore } });
     } catch (error) {
       console.error("Error posting answers:", error);
       // Handle error state here (e.g., show an error message)
@@ -108,59 +133,6 @@ function SurveyForm({ questions, personalQuest }: SurveyFormProps) {
 
   return (
     <form onSubmit={handleSubmit}>
-      {personalQuest.map((pq, index) => (
-        <div key={index + questions.length} className="form-group mt-4">
-          <label>
-            {index + 1}. {pq.question}
-          </label>
-          {pq.questionType === 0 && (
-            <>
-              <TextInput
-                name={pq.question}
-                value={formValues[pq.question] || ""}
-                placeholder={"Masukkan jawaban"}
-                onChange={handleChange}
-                error={errors[pq.question]}
-              />
-            </>
-          )}
-          {pq.questionType === 1 && (
-            <RadioInput
-              name={pq.question}
-              value={formValues[pq.question] || ""}
-              options={[
-                { label: "Male", value: "male" },
-                { label: "Female", value: "female" },
-              ]}
-              onChange={handleChange}
-              error={errors[pq.question]}
-            />
-          )}
-          {pq.questionType === 2 && (
-            <>
-              <TextInput
-                name={pq.question}
-                value={formValues[pq.question] || ""}
-                placeholder="Masukkan usia"
-                onChange={handleChange}
-                error={errors[pq.question]}
-              />
-            </>
-          )}
-          {pq.questionType === 3 && (
-            <>
-              <TextInput
-                name={pq.question}
-                value={formValues[pq.question] || ""}
-                placeholder="Select Date"
-                onChange={handleChange}
-                error={errors[pq.question]}
-              />
-            </>
-          )}
-        </div>
-      ))}
-
       {questions.map((q, index) => (
         <div key={index} className="form-group mt-4">
           <label>
@@ -198,7 +170,7 @@ function SurveyForm({ questions, personalQuest }: SurveyFormProps) {
 
 SurveyForm.propTypes = {
   questions: PropTypes.array.isRequired,
-  personalQuest: PropTypes.array.isRequired,
+  // personalQuest: PropTypes.array.isRequired,
 };
 
 export default SurveyForm;

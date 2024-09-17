@@ -7,7 +7,7 @@ function Sidebar() {
         <div className="vertical-menu">
           <Link to="/admin/survey susu">Survey Pemberian Susu Formula</Link>
           {/* <Link to="/admin/survey pola asuh">Survey Pola Asuh</Link> */}
-          <Link to="#">Survey Pemberian Susu B</Link>
+          <Link to="/admin/survey gigi">Survey Menyikat Gigi</Link>
           <Link to="#">Survey Pemberian Susu C</Link>
         </div>
       </div>

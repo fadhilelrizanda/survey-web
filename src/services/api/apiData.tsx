@@ -15,10 +15,29 @@ export const postQuestion = async (data: {
   question: string;
   questionType: number;
   keyAnswer: number;
+  score: number;
   surveyType: number;
 }) => {
   try {
     const response = await api.post("/question/post", data); // Ensure the endpoint matches your API route
+    return response.data;
+  } catch (error) {
+    console.error("Error posting data:", error);
+    throw error;
+  }
+};
+
+export const postUser = async (data: {
+  uniqueId: string;
+  name: string;
+  currentDate: string;
+  childname: string;
+  childDate: string;
+  age: number;
+  gender: number;
+}) => {
+  try {
+    const response = await api.post("/users/post", data); // Ensure the endpoint matches your API route
     return response.data;
   } catch (error) {
     console.error("Error posting data:", error);
@@ -66,7 +85,39 @@ export const updateQuestion = async (
     throw error;
   }
 };
+export const updateUserSurvey = async (
+  id: string,
+  idSurvey: number,
+  data: {
+    surveyA?: boolean; // Optional fields for each survey
+    surveyB?: boolean;
+    surveyC?: boolean;
+  }
+) => {
+  let urlSurvey: string;
 
+  try {
+    switch (idSurvey) {
+      case 1:
+        urlSurvey = "surveyA";
+        break;
+      case 2:
+        urlSurvey = "surveyB";
+        break;
+      case 3:
+        urlSurvey = "surveyC";
+        break;
+      default:
+        throw new Error("Invalid ID");
+    }
+
+    const response = await api.patch(`/${urlSurvey}/${id}`, data);
+    return response.data;
+  } catch (error) {
+    console.error("Error updating survey:", error);
+    throw error;
+  }
+};
 // Function for POST request
 export const postPersonalQuestion = async (data: {
   question: string;
@@ -83,10 +134,11 @@ export const postPersonalQuestion = async (data: {
 };
 
 export const postAns = async (data: {
-  pq: { [key: string]: string };
+  // pq: { [key: string]: string };
   ans: number[];
   score: number;
   surveyType: number;
+  userId: string;
 }) => {
   try {
     const response = await api.post(`/answer/post`, data);

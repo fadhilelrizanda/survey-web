@@ -1,35 +1,44 @@
 import BackBtn from "../../components/BackBtn";
 import Navbar from "../../components/Navbar";
-// import SurveyForm from "../../components/SurveyForm";
-// const questions = {
-//   "1. Nama Lengkap": 0,
-//   "2. Apakah Anda ...?": 1,
-//   "3. Apakah Anda ...?": 1,
-//   "4. Apakah Anda ...?": 1,
-//   "5. Apakah Anda ...?": 1,
-// };
-
-// const correct_answers = {
-//   question1: 1,
-//   question2: 1,
-//   question3: 1,
-//   question4: 1,
-//   question5: 1, // Ensure this matches the number of questions
-// };
+import SurveyForm from "../../components/SurveyForm";
+import { getAllQuestion } from "../../services/api/apiData";
+import { useEffect, useState } from "react";
 
 function SurveySikat() {
+  // const [personalQuest, setPersonalQuest] = useState<any[]>([]);
+  const [questions, setQuestions] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const surveyCode = 0;
+
+  const fetchQuestions = async () => {
+    try {
+      // const dataPersonal = await getAllPersonalQuestion(surveyCode);
+      const data = await getAllQuestion(surveyCode);
+      // setPersonalQuest(dataPersonal);
+      setQuestions(data);
+    } catch (error) {
+      setError("Failed to fetch questions");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchQuestions();
+  }, []);
+
   return (
     <>
-      <div className="container-fluid">
-        <div className="row">
-          <Navbar />
-        </div>
-      </div>
+      <Navbar />
+
       <div className="container mt-5">
         <BackBtn />
         <div className="row card-survey justify-content-center mt-5">
-          <h3 className="mb-5">Survey Menyikat Gigi</h3>
-          {/* <SurveyForm questions={questions} correct_answers={correct_answers} /> */}
+          <h3 className="mb-5">Survey Pola Menyikat Gigi</h3>
+          {loading && <p>Loading questions...</p>}
+          {error && <p>{error}</p>}
+          <SurveyForm questions={questions} surveyType={0} />
         </div>
       </div>
     </>

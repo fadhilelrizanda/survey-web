@@ -1,14 +1,11 @@
 import BackBtn from "../../components/BackBtn";
 import Navbar from "../../components/Navbar";
 import SurveyForm from "../../components/SurveyForm";
-import {
-  getAllPersonalQuestion,
-  getAllQuestion,
-} from "../../services/api/apiData";
+import { getAllQuestion } from "../../services/api/apiData";
 import { useEffect, useState } from "react";
 
 function SurveySusu() {
-  const [personalQuest, setPersonalQuest] = useState<any[]>([]);
+  // const [personalQuest, setPersonalQuest] = useState<any[]>([]);
   const [questions, setQuestions] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -16,9 +13,9 @@ function SurveySusu() {
 
   const fetchQuestions = async () => {
     try {
-      const dataPersonal = await getAllPersonalQuestion(surveyCode);
+      // const dataPersonal = await getAllPersonalQuestion(surveyCode);
       const data = await getAllQuestion(surveyCode);
-      setPersonalQuest(dataPersonal);
+      // setPersonalQuest(dataPersonal);
       setQuestions(data);
     } catch (error) {
       setError("Failed to fetch questions");
@@ -33,18 +30,15 @@ function SurveySusu() {
 
   return (
     <>
-      <div className="container-fluid">
-        <div className="row">
-          <Navbar />
-        </div>
-      </div>
+      <Navbar />
+
       <div className="container mt-5">
         <BackBtn />
         <div className="row card-survey justify-content-center mt-5">
           <h3 className="mb-5">Survey Pemberian Susu Formula</h3>
           {loading && <p>Loading questions...</p>}
           {error && <p>{error}</p>}
-          <SurveyForm questions={questions} personalQuest={personalQuest} />
+          <SurveyForm questions={questions} surveyType={0} />
         </div>
       </div>
     </>

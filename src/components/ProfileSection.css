@@ -1,0 +1,20 @@
+.profile-section-wrapper {
+  /* border: 10px solid black; */
+  padding: 100px 0px;
+
+  .desc {
+    align-items: self-start;
+    align-self: center;
+    padding-left: 100px;
+    text-align: justify;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-section-wrapper {
+    padding: 20px 0;
+  }
+  .profile-section-wrapper .desc {
+    margin-top: 15px;
+  }
+}

@@ -6,6 +6,7 @@ interface QuestionEntryProps {
     question: string;
     questionType: number;
     keyAnswer: number;
+    score: number;
     surveyType: number;
   }) => void;
   surveyType: number;
@@ -19,6 +20,7 @@ const QuestionEntry: React.FC<QuestionEntryProps> = ({
     question: "",
     questionType: 0,
     keyAnswer: 0,
+    score: 0,
     surveyType: surveyType,
   });
 
@@ -96,6 +98,7 @@ const QuestionEntry: React.FC<QuestionEntryProps> = ({
         question: "",
         questionType: 0,
         keyAnswer: 0,
+        score: 0,
         surveyType: surveyType,
       }); // Reset form values
     } catch (error) {
@@ -146,6 +149,18 @@ const QuestionEntry: React.FC<QuestionEntryProps> = ({
           <option value="">Pilih Jawaban</option>
           {getAnswerOptions()}
         </select>
+      </div>
+      <div className="form-group">
+        <label>Score</label>
+        <input
+          type="number"
+          className="form-control"
+          name="score"
+          placeholder="Score Soal"
+          value={formValues.score}
+          onChange={handleChange}
+          required
+        />
       </div>
       <button type="submit" className="btn btn-primary mt-4">
         Submit

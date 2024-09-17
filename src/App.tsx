@@ -7,11 +7,12 @@ import SurveySusu from "./pages/Survey/SurveySusu";
 import SurveySikat from "./pages/Survey/SurveySikat";
 import SurveyAsuh from "./pages/Survey/SurveyAsuh";
 import SurveyPeriksa from "./pages/Survey/SurveyPeriksa";
-import Success from "./pages/Survey/Success";
+import Success from "./pages/Survey/SuccessSusu";
 import ProtectedRoute from "./pages/Admin/ProtectedRoute";
 import Login from "./pages/Admin/Login";
 import AdminSurveySusu from "./pages/Admin/AdminSurveySusu";
 import AdminPolaAsuh from "./pages/Admin/AdminPolaAsuh";
+import { AdminMenyikatGigi } from "./pages/Admin/AdminMenyikat";
 
 const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -58,16 +59,31 @@ const App: React.FC = () => {
               }
             />
             <Route
-              path="/admin/survey pola asuh"
+              path="/admin/survey gigi"
               element={
                 <ProtectedRoute isAuthenticated={isAuthenticated}>
-                  <AdminPolaAsuh />
+                  <AdminMenyikatGigi />
                 </ProtectedRoute>
               }
             />
             <Route path="/" element={<Home />} />
             <Route path="/survey" element={<Survey />} />
-            <Route path="/surveya" element={<SurveySusu />} />
+            <Route
+              path="/surveya"
+              element={
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  <SurveySusu />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/surveyb"
+              element={
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  <SurveySikat />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/surveyb" element={<SurveySikat />} />
             <Route path="/surveyc" element={<SurveyAsuh />} />
             <Route path="/surveyd" element={<SurveyPeriksa />} />
