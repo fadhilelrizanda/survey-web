@@ -8,7 +8,6 @@ import {
   getAllQuestion,
   deleteQuestion,
   updateQuestion,
-  getAllPersonalQuestion,
   gettAllAns,
   deleteAns,
 } from "../../services/api/apiData";
@@ -36,8 +35,8 @@ export const AdminMenyikatGigi: React.FC = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [currentQuestion, setCurrentQuestion] = useState<any>(null);
   const [answerData, setAnswerData] = useState<AnswerData[]>([]);
-  const [answerData1, setAnswerData1] = useState<AnswerData[]>([]);
-  const [answerData2, setAnswerData2] = useState<AnswerData[]>([]);
+  // const [answerData1, setAnswerData1] = useState<AnswerData[]>([]);
+  // const [answerData2, setAnswerData2] = useState<AnswerData[]>([]);
   // Pie chart data state
   const [pieChartData, setPieChartData] = useState({
     labels: [] as string[], // Labels for the pie chart
@@ -86,10 +85,10 @@ export const AdminMenyikatGigi: React.FC = () => {
       const dataAns = await gettAllAns(surveyCode);
 
       const questData1 = await getAllQuestion(surveyCode1);
-      const dataAns2 = await gettAllAns(surveyCode1);
+      // const dataAns2 = await gettAllAns(surveyCode1);
 
       const questData2 = await getAllQuestion(surveyCode2);
-      const dataAns3 = await gettAllAns(surveyCode2);
+      // const dataAns3 = await gettAllAns(surveyCode2);
 
       console.log("Raw Questions Data:", data);
 
@@ -102,12 +101,12 @@ export const AdminMenyikatGigi: React.FC = () => {
           Object.entries(item.pq).map(([key, value]) => [key, value])
         ),
       }));
-      const formattedDataAns2 = dataAns2.map((item: any) => ({
-        ...item,
-        pq: Object.fromEntries(
-          Object.entries(item.pq).map(([key, value]) => [key, value])
-        ),
-      }));
+      // const formattedDataAns2 = dataAns2.map((item: any) => ({
+      //   ...item,
+      //   pq: Object.fromEntries(
+      //     Object.entries(item.pq).map(([key, value]) => [key, value])
+      //   ),
+      // }));
       //   console.log("Formatted Answers Data:", formattedDataAns);
 
       setQuestions(data);
