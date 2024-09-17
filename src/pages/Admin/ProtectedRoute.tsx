@@ -11,8 +11,6 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
 }) => {
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
-
   return isAuthenticated ? (
     children
   ) : (
