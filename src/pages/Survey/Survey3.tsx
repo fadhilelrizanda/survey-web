@@ -11,7 +11,6 @@ function Survey3() {
   const [questions2, setQuestions2] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const surveyCode = 0;
 
   const fetchQuestions = async () => {
     try {
