@@ -6,7 +6,6 @@ import imgParenting from "../assets/images/home-img/parenting.jpg";
 import CardSurvey from "../components/CardSurvey";
 import Gmaps from "../components/Gmaps";
 import "./Home.css";
-import { Link } from "react-router-dom";
 import ProfileSection from "../components/ProfileSection";
 import Footer from "../components/Footer";
 function Home() {
