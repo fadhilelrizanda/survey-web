@@ -3,12 +3,12 @@ import Splash from "./components/Splash";
 import Home from "./pages/Home";
 import { Routes, Route } from "react-router-dom";
 import Survey from "./pages/Survey";
-import SurveySusu from "./pages/Survey/SurveySusu";
-import SurveySikat from "./pages/Survey/SurveySikat";
+import SurveySusu from "./pages/Survey/Survey1";
+import SurveySikat from "./pages/Survey/Survey2";
 import SurveyAsuh from "./pages/Survey/SurveyAsuh";
 
-import Success from "./pages/Survey/SuccessSusu";
-import SuccessSikat from "./pages/Survey/SuccessSikat";
+import Success from "./pages/Survey/Success1";
+import SuccessSikat from "./pages/Survey/Success2";
 import ProtectedRoute from "./pages/Admin/ProtectedRoute";
 import Login from "./pages/Admin/Login";
 import AdminSurveySusu from "./pages/Admin/AdminSurveySusu";

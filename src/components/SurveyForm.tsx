@@ -133,37 +133,43 @@ function SurveyForm({ questions, surveyType }: SurveyFormProps) {
 
   return (
     <form onSubmit={handleSubmit}>
-      {questions.map((q, index) => (
-        <div key={index} className="form-group mt-4">
-          <label>
-            {index + 1}. {q.question}
-          </label>
-          {q.questionType === 2 ? (
-            <TextInput
-              name={`question${index + 1}`}
-              value={formValues[`question${index + 1}`] || ""}
-              placeholder="Masukkan jawaban"
-              onChange={handleChange}
-              error={errors[`question${index + 1}`]}
-            />
-          ) : (
-            <RadioInput
-              name={`question${index + 1}`}
-              value={formValues[`question${index + 1}`] || ""}
-              options={[
-                { label: "Iya", value: "1" },
-                { label: "Tidak", value: "0" },
-              ]}
-              onChange={handleChange}
-              error={errors[`question${index + 1}`]}
-            />
-          )}
+      <div className="row justify-content-center">
+        <div className="col-md-8 sub-survey">
+          <h2 className="text-center">Survey A</h2>
+          {questions.map((q, index) => (
+            <div key={index} className="form-group mt-4">
+              <label>
+                {index + 1}. {q.question}
+              </label>
+              {q.questionType === 2 ? (
+                <TextInput
+                  name={`question${index + 1}`}
+                  value={formValues[`question${index + 1}`] || ""}
+                  placeholder="Masukkan jawaban"
+                  onChange={handleChange}
+                  error={errors[`question${index + 1}`]}
+                />
+              ) : (
+                <RadioInput
+                  name={`question${index + 1}`}
+                  value={formValues[`question${index + 1}`] || ""}
+                  options={[
+                    { label: "Iya", value: "1" },
+                    { label: "Tidak", value: "0" },
+                  ]}
+                  onChange={handleChange}
+                  error={errors[`question${index + 1}`]}
+                />
+              )}
+            </div>
+          ))}
         </div>
-      ))}
-
-      <button type="submit" className="btn btn-primary mt-4">
-        Submit
-      </button>
+      </div>
+      <div className="row justify-content-center">
+        <button type="submit" className="btn btn-primary mt-4 col-md-4 mb-4">
+          Submit
+        </button>
+      </div>
     </form>
   );
 }

@@ -1,8 +1,9 @@
 import BackBtn from "../../components/BackBtn";
 import Navbar from "../../components/Navbar";
-import SurveyForm3 from "../../components/SurveyForm3";
+import SurveyForm2 from "../../components/SurveyForm2";
 import { getAllQuestion } from "../../services/api/apiData";
 import { useEffect, useState } from "react";
+import "./Survey.css";
 
 function Survey3() {
   // const [personalQuest, setPersonalQuest] = useState<any[]>([]);
@@ -12,6 +13,9 @@ function Survey3() {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  const surveyCode = [2, 22, 222];
+  const surveyName = ["Demokratis", "Otoriter", "Permisif"];
+  const sessionName = ["s2Score", "s22Score", "s222Score"];
   const fetchQuestions = async () => {
     try {
       // const dataPersonal = await getAllPersonalQuestion(surveyCode);
@@ -41,16 +45,18 @@ function Survey3() {
 
       <div className="container mt-5">
         <BackBtn />
-        <div className="row card-survey justify-content-center mt-5">
-          <h3 className="mb-5">Survey 3</h3>
-          {loading && <p>Loading questions...</p>}
-          {error && <p>{error}</p>}
-          <SurveyForm3
-            questions={questions}
-            questions1={questions1}
-            questions2={questions2}
-          />
-        </div>
+        <h3 className="mb-5 text-center">Survey 3</h3>
+
+        {loading && <p>Loading questions...</p>}
+        {error && <p>{error}</p>}
+        <SurveyForm2
+          questions={questions}
+          questions1={questions1}
+          questions2={questions2}
+          surveyCode={surveyCode}
+          surveyName={surveyName}
+          sessionName={sessionName}
+        />
       </div>
     </>
   );

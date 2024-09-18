@@ -46,11 +46,11 @@ function Home() {
                   masalah yang lebih besar di masa mendatang. Ikuti survei kami
                   untuk membantu anak-anak tumbuh dengan senyum sehat
                 </p>
-                <Link to="/">
+                <a href="#survey">
                   <button className="btn btn-primary btn-round">
                     Lakukan Survey
                   </button>
-                </Link>
+                </a>
               </div>
             </div>
             <div className="col-md-7 col-12 hero-img  mt-5 order-0 order-md-1">
@@ -62,7 +62,9 @@ function Home() {
       <div className="container-fluid">
         <ProfileSection />
         <div className="row  survey-section mt-5">
-          <h4 className="pb-5">Survey Kesehatan Gigi</h4>
+          <h4 className="pb-5" id="survey">
+            Survey Kesehatan Gigi
+          </h4>
           <div className="row">
             <div className="col-md-8  mx-auto">
               {/* <p>

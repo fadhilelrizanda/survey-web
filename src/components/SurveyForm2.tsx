@@ -3,8 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { postAns } from "../services/api/apiData";
 import "./SurveyForm.css";
-import TextInput from "./PersonalQuest/TextInput";
-import RadioInput from "./PersonalQuest/RadioInput";
+import SurveyQuestion from "./SurveyQuestion";
 
 interface SurveyFormProps {
   questions: Array<{
@@ -25,14 +24,28 @@ interface SurveyFormProps {
     score: number;
     keyAnswer: number;
   }>;
+  surveyCode: number[];
+  surveyName: string[];
+  sessionName: string[];
 }
 
 interface FormValues {
   [key: string]: string;
 }
 
-function SurveyForm2({ questions, questions1, questions2 }: SurveyFormProps) {
+function SurveyForm2({
+  questions,
+  questions1,
+  questions2,
+  surveyCode,
+  surveyName,
+  sessionName,
+}: SurveyFormProps) {
   const navigate = useNavigate();
+  console.log("questions");
+  console.log(questions);
+  console.log(questions1);
+  console.log(questions2);
   // const [score, setScore] = useState<number>(0);
   const [formValues, setFormValues] = useState<FormValues>({});
   const [formValues1, setFormValues1] = useState<FormValues>({});
@@ -78,19 +91,20 @@ function SurveyForm2({ questions, questions1, questions2 }: SurveyFormProps) {
 
     questions1.forEach((__, index) => {
       if (!formValues1[`question1_${index + 1}`]) {
-        newErrors[`question${index + 1}`] = "This field is required";
+        newErrors[`question1_${index + 1}`] = "This field is required";
         isValid = false;
       }
     });
 
     questions2.forEach((__, index) => {
       if (!formValues2[`question2_${index + 1}`]) {
-        newErrors[`question${index + 1}`] = "This field is required";
+        newErrors[`question2_${index + 1}`] = "This field is required";
         isValid = false;
       }
     });
 
     setErrors(newErrors);
+    console.log(newErrors);
     return isValid;
   };
 
@@ -162,7 +176,7 @@ function SurveyForm2({ questions, questions1, questions2 }: SurveyFormProps) {
     }, {} as { [key: string]: number });
 
     // debugging formvalue
-    console.log("form value and debugging");
+    console.log("formvalue and debugging");
     // console.log(formValues);
     // console.log(formValues1);
     // console.log(correctScore);
@@ -198,7 +212,7 @@ function SurveyForm2({ questions, questions1, questions2 }: SurveyFormProps) {
         // pq,
         ans,
         score: getScore,
-        surveyType: 1,
+        surveyType: surveyCode[0],
         userId: userId,
       });
 
@@ -206,7 +220,7 @@ function SurveyForm2({ questions, questions1, questions2 }: SurveyFormProps) {
         // pq,
         ans: ans1,
         score: getScore1,
-        surveyType: 11,
+        surveyType: surveyCode[1],
         userId: userId,
       });
 
@@ -214,12 +228,12 @@ function SurveyForm2({ questions, questions1, questions2 }: SurveyFormProps) {
         // pq,
         ans: ans2,
         score: getScore2,
-        surveyType: 111,
+        surveyType: surveyCode[2],
         userId: userId,
       });
-      sessionStorage.setItem("s1Score", getScore.toString());
-      sessionStorage.setItem("s11Score", getScore1.toString());
-      sessionStorage.setItem("s111Score", getScore2.toString());
+      sessionStorage.setItem(sessionName[0], getScore.toString());
+      sessionStorage.setItem(sessionName[1], getScore1.toString());
+      sessionStorage.setItem(sessionName[2], getScore2.toString());
       navigate("/success2");
     } catch (error) {
       console.error("Error posting answers:", error);
@@ -228,108 +242,54 @@ function SurveyForm2({ questions, questions1, questions2 }: SurveyFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Survey 1</h2>
-      {questions.map((q, index) => (
-        <div key={index} className="form-group mt-4">
-          <label>
-            {index + 1}. {q.question}
-          </label>
-          {q.questionType === 2 ? (
-            <TextInput
-              name={`question${index + 1}`}
-              value={formValues[`question${index + 1}`] || ""}
-              placeholder="Masukkan jawaban"
-              onChange={(e) => handleChange(e, 0)}
-              error={errors[`question${index + 1}`]}
+    <>
+      <form onSubmit={handleSubmit}>
+        <div className="row justify-content-center">
+          <div className="col-md-8 sub-survey">
+            <h2>{surveyName[0]}</h2>
+            <SurveyQuestion
+              questions={questions}
+              handleChange={handleChange}
+              formValues={formValues}
+              errors={errors}
+              question_name="question"
+              section_num={0}
             />
-          ) : (
-            <RadioInput
-              name={`question${index + 1}`}
-              value={formValues[`question${index + 1}`] || ""}
-              options={[
-                { label: "Iya", value: "1" },
-                { label: "Tidak", value: "0" },
-              ]}
-              onChange={(e) => handleChange(e, 0)}
-              error={errors[`question${index + 1}`]}
-            />
-          )}
+          </div>
         </div>
-      ))}
-      <h2>Survey 2</h2>
-      {questions1.map((q, index) => (
-        <div key={index} className="form-group mt-4">
-          <label>
-            {index + 1}. {q.question}
-          </label>
-          {q.questionType === 2 ? (
-            <RadioInput
-              name={`question1_${index + 1}`}
-              value={formValues1[`question1_${index + 1}`] || ""}
-              options={[
-                { label: "Sangat Setuju", value: "4" },
-                { label: "Setuju", value: "3" },
-                { label: "Kurang Setuju", value: "2" },
-                { label: "Tidak Setuju", value: "1" },
-                { label: "Sangat Tidak Setuju", value: "0" },
-              ]}
-              onChange={(e) => handleChange(e, 1)}
-              error={errors[`question1_${index + 1}`]}
+        <div className=" row justify-content-center">
+          <div className="col-md-8 sub-survey">
+            <h2>{surveyName[1]}</h2>
+            <SurveyQuestion
+              questions={questions1}
+              handleChange={handleChange}
+              formValues={formValues1}
+              errors={errors}
+              question_name="question1_"
+              section_num={1}
             />
-          ) : (
-            <RadioInput
-              name={`question1_${index + 1}`}
-              value={formValues1[`question1_${index + 1}`] || ""}
-              options={[
-                { label: "Iya", value: "1" },
-                { label: "Tidak", value: "0" },
-              ]}
-              onChange={(e) => handleChange(e, 1)}
-              error={errors[`question1_${index + 1}`]}
-            />
-          )}
+          </div>
         </div>
-      ))}
-      <h2>survey 3</h2>
-      {questions2.map((q, index) => (
-        <div key={index} className="form-group mt-4">
-          <label>
-            {index + 1}. {q.question}
-          </label>
-          {q.questionType === 2 ? (
-            <RadioInput
-              name={`question2_${index + 1}`}
-              value={formValues2[`question2_${index + 1}`] || ""}
-              options={[
-                { label: "Sangat Setuju", value: "4" },
-                { label: "Setuju", value: "3" },
-                { label: "Kurang Setuju", value: "2" },
-                { label: "Tidak Setuju", value: "1" },
-                { label: "Sangat Tidak Setuju", value: "0" },
-              ]}
-              onChange={(e) => handleChange(e, 2)}
-              error={errors[`question2_${index + 1}`]}
+        <div className="row justify-content-center">
+          <div className="col-md-8 sub-survey">
+            <h2>{surveyName[2]}</h2>
+            <SurveyQuestion
+              questions={questions2}
+              handleChange={handleChange}
+              formValues={formValues2}
+              errors={errors}
+              question_name="question2_"
+              section_num={2}
             />
-          ) : (
-            <RadioInput
-              name={`question2_${index + 1}`}
-              value={formValues2[`question2_${index + 1}`] || ""}
-              options={[
-                { label: "Iya", value: "1" },
-                { label: "Tidak", value: "0" },
-              ]}
-              onChange={(e) => handleChange(e, 2)}
-              error={errors[`question2_${index + 1}`]}
-            />
-          )}
+          </div>
         </div>
-      ))}
-
-      <button type="submit" className="btn btn-primary mt-4">
-        Submit
-      </button>
-    </form>
+        <div className="row justify-content-center">
+          <button type="submit" className="btn btn-primary mt-4 col-md-4 mb-3">
+            Submit
+          </button>
+        </div>
+      </form>
+    </>
   );
 }
 

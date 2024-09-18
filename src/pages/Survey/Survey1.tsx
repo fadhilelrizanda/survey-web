@@ -34,12 +34,10 @@ function SurveySusu() {
 
       <div className="container mt-5">
         <BackBtn />
-        <div className="row card-survey justify-content-center mt-5">
-          <h3 className="mb-5">Survey Pemberian Susu Formula</h3>
-          {loading && <p>Loading questions...</p>}
-          {error && <p>{error}</p>}
-          <SurveyForm questions={questions} surveyType={0} />
-        </div>
+        <h3 className="mb-2 text-center">Survey Pemberian Susu Formula</h3>
+        {loading && <p>Loading questions...</p>}
+        {error && <p>{error}</p>}
+        <SurveyForm questions={questions} surveyType={0} />
       </div>
     </>
   );

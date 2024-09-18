@@ -11,7 +11,9 @@ function SurveySikat() {
   const [questions2, setQuestions2] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
+  const surveyCode = [1, 11, 111];
+  const surveyName = ["Pengetahuan", "Sikap", "Tindakan"];
+  const sessionName = ["s1Score", "s11Score", "s111Score"];
   const fetchQuestions = async () => {
     try {
       // const dataPersonal = await getAllPersonalQuestion(surveyCode);
@@ -41,7 +43,7 @@ function SurveySikat() {
 
       <div className="container mt-5">
         <BackBtn />
-        <div className="row card-survey justify-content-center mt-5">
+        <div className="row justify-content-center mt-5">
           <h3 className="mb-5">Survey Pola Menyikat Gigi</h3>
           {loading && <p>Loading questions...</p>}
           {error && <p>{error}</p>}
@@ -49,6 +51,9 @@ function SurveySikat() {
             questions={questions}
             questions1={questions1}
             questions2={questions2}
+            surveyCode={surveyCode}
+            surveyName={surveyName}
+            sessionName={sessionName}
           />
         </div>
       </div>
