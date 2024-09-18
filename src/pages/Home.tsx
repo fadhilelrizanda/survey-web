@@ -103,7 +103,7 @@ function Home() {
             imgSurvey={imgParenting}
             inverse={true}
             alignRight={false}
-            route={"/surveya"}
+            route={"/surveyc"}
             state={S2state}
           />
         </div>

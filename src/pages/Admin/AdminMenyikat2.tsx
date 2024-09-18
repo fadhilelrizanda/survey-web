@@ -25,7 +25,7 @@ interface AnswerData {
   surveyType: number;
 }
 
-export const AdminMenyikatGigi: React.FC = () => {
+export const AdminMenyikat2: React.FC = () => {
   const [questions, setQuestions] = useState<any[]>([]);
   const [questions1, setQuestions1] = useState<any[]>([]);
   const [questions2, setQuestions2] = useState<any[]>([]);
@@ -62,9 +62,9 @@ export const AdminMenyikatGigi: React.FC = () => {
     datasets: [] as any[], // Datasets for the stacked bar chart
   });
 
-  const surveyCode = 1;
-  const surveyCode1 = 11;
-  const surveyCode2 = 111;
+  const surveyCode = 2;
+  const surveyCode1 = 22;
+  const surveyCode2 = 222;
   const questAns = [
     ["Tidak", "Iya"],
     ["Tidak Pernah", "Kadang-kadang", "Selalu"],
@@ -247,7 +247,7 @@ export const AdminMenyikatGigi: React.FC = () => {
           <Sidebar />
           <div className="col-md-10 border-highlight content">
             <h3 className="mt-5 text-center">Survey Menyikat Gigi</h3>
-            <h4 className="mt-5 text-center">Survey Pengetahuan</h4>
+            <h4 className="mt-5 text-center">Survey DEMOKRATIS</h4>
             <div className="row mt-5">
               <h4 className="text-center mt-2 mb-5">Statistic Survey</h4>
               <div className="col-md-3">
@@ -353,7 +353,7 @@ export const AdminMenyikatGigi: React.FC = () => {
                 </table>
                 <QuestionEntry
                   onAddQuestion={handleAddQuestion}
-                  surveyType={1}
+                  surveyType={2}
                 />
               </>
             )}
@@ -362,7 +362,7 @@ export const AdminMenyikatGigi: React.FC = () => {
             <div className="row section-attitude">
               <div className="col-md-10 border-highlight content">
                 <h3 className="mt-5 text-center">Survey Menyikat Gigi</h3>
-                <h4 className="mt-5 text-center">Survey Sikap</h4>
+                <h4 className="mt-5 text-center">Survey OTORITER</h4>
                 <div className="row mt-5">
                   <h4 className="text-center mt-2 mb-5">Statistic Survey</h4>
                   <div className="col-md-3">
@@ -472,7 +472,7 @@ export const AdminMenyikatGigi: React.FC = () => {
                     </table>
                     <QuestionEntry
                       onAddQuestion={handleAddQuestion1}
-                      surveyType={11}
+                      surveyType={22}
                     />
                   </>
                 )}
@@ -481,7 +481,7 @@ export const AdminMenyikatGigi: React.FC = () => {
             {/* survey action */}
             <div className="row section-attitude">
               <div className="col-md-10 border-highlight content">
-                <h3 className="mt-5 text-center">Survey Tindakan </h3>
+                <h3 className="mt-5 text-center">Survey PERMISIF </h3>
                 <div className="row mt-5">
                   <h4 className="text-center mt-2 mb-5">Statistic Survey</h4>
                   <div className="col-md-3">
@@ -591,7 +591,7 @@ export const AdminMenyikatGigi: React.FC = () => {
                     </table>
                     <QuestionEntry
                       onAddQuestion={handleAddQuestion2}
-                      surveyType={111}
+                      surveyType={222}
                     />
                   </>
                 )}

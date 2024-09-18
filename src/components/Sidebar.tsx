@@ -8,7 +8,7 @@ function Sidebar() {
           <Link to="/admin/survey susu">Survey Pemberian Susu Formula</Link>
           {/* <Link to="/admin/survey pola asuh">Survey Pola Asuh</Link> */}
           <Link to="/admin/survey gigi">Survey Menyikat Gigi</Link>
-          <Link to="#">Survey Pemberian Susu C</Link>
+          <Link to="/admin/survey2">Survey Pemberian Susu C</Link>
         </div>
       </div>
     </>

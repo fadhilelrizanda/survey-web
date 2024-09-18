@@ -31,7 +31,7 @@ interface FormValues {
   [key: string]: string;
 }
 
-function SurveyForm2({ questions, questions1, questions2 }: SurveyFormProps) {
+function SurveyForm3({ questions, questions1, questions2 }: SurveyFormProps) {
   const navigate = useNavigate();
   // const [score, setScore] = useState<number>(0);
   const [formValues, setFormValues] = useState<FormValues>({});
@@ -126,6 +126,7 @@ function SurveyForm2({ questions, questions1, questions2 }: SurveyFormProps) {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log("submit");
 
     if (!validateForm()) return;
 
@@ -198,7 +199,7 @@ function SurveyForm2({ questions, questions1, questions2 }: SurveyFormProps) {
         // pq,
         ans,
         score: getScore,
-        surveyType: 1,
+        surveyType: 2,
         userId: userId,
       });
 
@@ -206,7 +207,7 @@ function SurveyForm2({ questions, questions1, questions2 }: SurveyFormProps) {
         // pq,
         ans: ans1,
         score: getScore1,
-        surveyType: 11,
+        surveyType: 22,
         userId: userId,
       });
 
@@ -214,13 +215,13 @@ function SurveyForm2({ questions, questions1, questions2 }: SurveyFormProps) {
         // pq,
         ans: ans2,
         score: getScore2,
-        surveyType: 111,
+        surveyType: 222,
         userId: userId,
       });
-      sessionStorage.setItem("s1Score", getScore.toString());
-      sessionStorage.setItem("s11Score", getScore1.toString());
-      sessionStorage.setItem("s111Score", getScore2.toString());
-      navigate("/success2");
+      sessionStorage.setItem("s2Score", getScore.toString());
+      sessionStorage.setItem("s22Score", getScore1.toString());
+      sessionStorage.setItem("s222Score", getScore2.toString());
+      navigate("/success3");
     } catch (error) {
       console.error("Error posting answers:", error);
       // Handle error state here (e.g., show an error message)
@@ -235,7 +236,19 @@ function SurveyForm2({ questions, questions1, questions2 }: SurveyFormProps) {
           <label>
             {index + 1}. {q.question}
           </label>
-          {q.questionType === 2 ? (
+          {q.questionType === 1 ? (
+            <RadioInput
+              name={`question${index + 1}`}
+              value={formValues[`question${index + 1}`] || ""}
+              options={[
+                { label: "Tidak Pernah", value: "0" },
+                { label: "Kadang-kadang", value: "1" },
+                { label: "Selalu", value: "2" },
+              ]}
+              onChange={(e) => handleChange(e, 0)}
+              error={errors[`question${index + 1}`]}
+            />
+          ) : q.questionType === 2 ? (
             <TextInput
               name={`question${index + 1}`}
               value={formValues[`question${index + 1}`] || ""}
@@ -263,7 +276,19 @@ function SurveyForm2({ questions, questions1, questions2 }: SurveyFormProps) {
           <label>
             {index + 1}. {q.question}
           </label>
-          {q.questionType === 2 ? (
+          {q.questionType === 1 ? (
+            <RadioInput
+              name={`question1_${index + 1}`}
+              value={formValues1[`question1_${index + 1}`] || ""}
+              options={[
+                { label: "Tidak Pernah", value: "0" },
+                { label: "Kadang-kadang", value: "1" },
+                { label: "Selalu", value: "2" },
+              ]}
+              onChange={(e) => handleChange(e, 1)}
+              error={errors[`question1_${index + 1}`]}
+            />
+          ) : q.questionType === 2 ? (
             <RadioInput
               name={`question1_${index + 1}`}
               value={formValues1[`question1_${index + 1}`] || ""}
@@ -297,7 +322,19 @@ function SurveyForm2({ questions, questions1, questions2 }: SurveyFormProps) {
           <label>
             {index + 1}. {q.question}
           </label>
-          {q.questionType === 2 ? (
+          {q.questionType === 1 ? (
+            <RadioInput
+              name={`question2_${index + 1}`}
+              value={formValues2[`question2_${index + 1}`] || ""}
+              options={[
+                { label: "Tidak Pernah", value: "0" },
+                { label: "Kadang-kadang", value: "1" },
+                { label: "Selalu", value: "2" },
+              ]}
+              onChange={(e) => handleChange(e, 2)}
+              error={errors[`question2_${index + 1}`]}
+            />
+          ) : q.questionType === 2 ? (
             <RadioInput
               name={`question2_${index + 1}`}
               value={formValues2[`question2_${index + 1}`] || ""}
@@ -333,10 +370,10 @@ function SurveyForm2({ questions, questions1, questions2 }: SurveyFormProps) {
   );
 }
 
-SurveyForm2.propTypes = {
+SurveyForm3.propTypes = {
   questions: PropTypes.array.isRequired,
   questions1: PropTypes.array.isRequired,
   questions2: PropTypes.array.isRequired,
 };
 
-export default SurveyForm2;
+export default SurveyForm3;

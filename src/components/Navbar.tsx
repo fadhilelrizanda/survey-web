@@ -63,15 +63,21 @@ function Navbar() {
                     )}
                     {survey1 && (
                       <li>
-                        <Link className="btn btn-danger dropdown-item" to="/">
-                          Survey Pola Asuh
+                        <Link
+                          className="btn btn-danger dropdown-item"
+                          to="/success2"
+                        >
+                          Survey Menyikat
                         </Link>
                       </li>
                     )}
                     {survey2 && (
                       <li>
-                        <Link className="btn btn-danger dropdown-item" to="/">
-                          Survey Menyikat
+                        <Link
+                          className="btn btn-danger dropdown-item"
+                          to="/success3"
+                        >
+                          Survey Menyikat 2
                         </Link>
                       </li>
                     )}
