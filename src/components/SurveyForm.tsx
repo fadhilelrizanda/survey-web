@@ -5,6 +5,7 @@ import { postAns } from "../services/api/apiData";
 import "./SurveyForm.css";
 import TextInput from "./PersonalQuest/TextInput";
 import RadioInput from "./PersonalQuest/RadioInput";
+import { Riple } from "react-loading-indicators";
 
 interface SurveyFormProps {
   questions: Array<{
@@ -30,6 +31,7 @@ function SurveyForm({ questions, surveyType }: SurveyFormProps) {
   // const [score, setScore] = useState<number>(0);
   const [formValues, setFormValues] = useState<FormValues>({});
   const [errors, setErrors] = useState<FormValues>({});
+  const [isLoading, setIsloading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -76,6 +78,7 @@ function SurveyForm({ questions, surveyType }: SurveyFormProps) {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsloading(true);
 
     if (!validateForm()) return;
 
@@ -110,6 +113,7 @@ function SurveyForm({ questions, surveyType }: SurveyFormProps) {
         surveyType: surveyType,
         userId: userId,
       });
+      setIsloading(false);
       switch (surveyType) {
         case 0:
           sessionStorage.setItem("s0Score", getScore.toString());
@@ -166,9 +170,15 @@ function SurveyForm({ questions, surveyType }: SurveyFormProps) {
         </div>
       </div>
       <div className="row justify-content-center">
-        <button type="submit" className="btn btn-primary mt-4 col-md-4 mb-4">
-          Submit
-        </button>
+        {isLoading ? (
+          <div className="riple-sect text-center">
+            <Riple color="#32cd32" size="medium" text="Loading" textColor="" />
+          </div>
+        ) : (
+          <button type="submit" className="btn btn-primary mt-4 col-md-4 mb-4">
+            Submit
+          </button>
+        )}
       </div>
     </form>
   );

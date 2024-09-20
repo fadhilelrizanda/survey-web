@@ -1,11 +1,23 @@
-/* src/components/Splash.css */
+/* Splash.css */
 
-.check_border {
-  border: 2px solid black;
+.splash_bg {
+  /* Make sure the container takes up the full viewport */
+  width: 100vw; /* Full width of the viewport */
+  height: 100vh; /* Full height of the viewport */
+  background-color: #f8f9fa; /* Optional background color */
+}
+
+.splash_img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full height of the container */
 }
 
 .splash_img img {
-  height: 600px;
+  max-width: 100%; /* Responsive width */
+  max-height: 100%; /* Ensure image doesn't exceed container */
+  object-fit: contain; /* Ensure the image retains its aspect ratio */
 }
 
 .splash_bg {

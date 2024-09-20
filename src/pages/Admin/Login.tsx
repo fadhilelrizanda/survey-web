@@ -5,6 +5,7 @@ import "./Login.css";
 import { v4 as uuidv } from "uuid";
 import { postUser } from "../../services/api/apiData";
 import imgDentist from "../../assets/images/login/smiling-dentist.jpg";
+import { Riple } from "react-loading-indicators";
 
 interface LoginProps {
   onLogin: (status: boolean) => void;
@@ -21,6 +22,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
     month: "",
     year: "",
   });
+  const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -41,6 +43,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     console.log("Username: ", username);
     console.log("Child Name: ", childname);
     console.log("Place and Date of Birth: ", placeBirth);
@@ -73,6 +76,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
       console.log("Data posted successfully:", response);
       onLogin(true);
+      setLoading(false);
       navigate(from, { replace: true }); // Redirect to the original location
     } catch (error) {
       console.error("Error posting data:", error);
@@ -196,13 +200,22 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                               </div>
 
                               <div className="form-group mt-5"></div>
-                              <button
-                                type="submit"
-                                className="btn btn-primary"
-                                onClick={handleLogin}
-                              >
-                                Submit
-                              </button>
+                              {isLoading ? (
+                                <Riple
+                                  color="#32cd32"
+                                  size="medium"
+                                  text=""
+                                  textColor=""
+                                /> // You can replace this with any loading animation or spinner component
+                              ) : (
+                                <button
+                                  type="submit"
+                                  className="btn btn-primary"
+                                  onClick={handleLogin}
+                                >
+                                  Submit
+                                </button>
+                              )}
                             </form>
                           </div>
                         </div>

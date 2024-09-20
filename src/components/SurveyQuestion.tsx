@@ -56,8 +56,8 @@ const SurveyQuestion: React.FC<SurveyQuestionProp> = ({
               name={`${question_name}${index + 1}`}
               value={formValues[`${question_name}${index + 1}`] || ""}
               options={[
-                { label: "Tidak", value: "0" },
                 { label: "Iya", value: "1" },
+                { label: "Tidak", value: "0" },
               ]}
               onChange={(e) => handleChange(e, section_num)}
               error={errors[`${question_name}${index + 1}`]}

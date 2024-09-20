@@ -2,20 +2,20 @@ import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
 interface ProtectedRouteProps {
-  isAuthenticated: boolean;
+  isAdmin: boolean;
   children: React.ReactNode;
 }
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
-  isAuthenticated,
+const ProtectedAdmin: React.FC<ProtectedRouteProps> = ({
+  isAdmin,
   children,
 }) => {
   const location = useLocation();
-  return isAuthenticated ? (
+  return isAdmin ? (
     children
   ) : (
-    <Navigate to="/login" state={{ from: location }} />
+    <Navigate to="/admin/login" state={{ from: location }} />
   );
 };
 
-export default ProtectedRoute;
+export default ProtectedAdmin;

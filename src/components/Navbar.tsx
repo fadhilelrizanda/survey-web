@@ -8,7 +8,6 @@ function Navbar() {
   const survey0 = sessionStorage.getItem("s0Score");
   const survey1 = sessionStorage.getItem("s1Score");
   const survey2 = sessionStorage.getItem("s2Score");
-  console.log(username);
   return (
     <div className="nav-wrapper">
       <nav className="navbar navbar-expand-lg bg-body-tertiary">

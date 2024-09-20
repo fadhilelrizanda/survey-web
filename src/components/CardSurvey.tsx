@@ -1,7 +1,7 @@
 import "./CardSurvey.css";
 import { Link } from "react-router-dom";
 interface CardSurveyProps {
-  imgSurvey: any;
+  imgSurvey: string;
   title: string;
   text: string;
   inverse: boolean;

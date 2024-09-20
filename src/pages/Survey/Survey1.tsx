@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import BackBtn from "../../components/BackBtn";
 import Navbar from "../../components/Navbar";
 import SurveyForm from "../../components/SurveyForm";

@@ -5,7 +5,7 @@
   .desc {
     align-items: self-start;
     align-self: center;
-    padding-left: 100px;
+    padding: 0px 25px;
     text-align: justify;
   }
 }
@@ -13,8 +13,13 @@
 @media (max-width: 768px) {
   .profile-section-wrapper {
     padding: 20px 0;
+
+    .desc{
+      padding-left: 15px;
+    }
   }
   .profile-section-wrapper .desc {
     margin-top: 15px;
   }
+  
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
 
 interface UpdateModalProps {
@@ -22,6 +23,61 @@ const UpdateModal: React.FC<UpdateModalProps> = ({
   const handleSave = () => {
     onSave(updatedQuestion); // Pass the updated question back to the parent
     onHide(); // Hide the modal
+  };
+
+  // Get answer options based on question type
+  const getAnswerOptions = () => {
+    const questionType = updatedQuestion?.questionType;
+
+    switch (parseInt(questionType)) {
+      case 0: // Benar/Salah
+        return (
+          <>
+            <option key="0" value="0">
+              Tidak
+            </option>
+            <option key="1" value="1">
+              Ya
+            </option>
+          </>
+        );
+      case 1: // Pilihan Ganda (3 pilihan)
+        return (
+          <>
+            <option key="0" value="0">
+              Tidak Pernah
+            </option>
+            <option key="1" value="1">
+              Kadang-kadang
+            </option>
+            <option key="2" value="2">
+              Selalu
+            </option>
+          </>
+        );
+      case 2: // Pilihan Ganda (5 pilihan)
+        return (
+          <>
+            <option key="0" value="0">
+              Sangat Tidak Setuju
+            </option>
+            <option key="1" value="1">
+              Tidak Setuju
+            </option>
+            <option key="2" value="2">
+              Kurang Setuju
+            </option>
+            <option key="3" value="3">
+              Setuju
+            </option>
+            <option key="4" value="4">
+              Sangat Setuju
+            </option>
+          </>
+        );
+      default:
+        return <option value="">Pilih Jawaban</option>;
+    }
   };
 
   return (
@@ -77,8 +133,8 @@ const UpdateModal: React.FC<UpdateModalProps> = ({
               >
                 <option value="">Jenis Pertanyaan</option>
                 <option value="0">Benar Salah</option>
-                <option value="1">Pilihan Ganda</option>
-                {/* <option value="2">Text</option> */}
+                <option value="1">Pilihan Ganda (3 Pilihan)</option>
+                <option value="2">Pilihan Ganda (5 Pilihan)</option>
               </select>
             </div>
             <div className="form-group">
@@ -97,13 +153,23 @@ const UpdateModal: React.FC<UpdateModalProps> = ({
                 }
                 required
               >
-                <option value="">Pilih Jawaban</option>
-                <option value="1">Iya</option>
-                <option value="0">Tidak</option>
-                <option value="2">Kadang-kadang</option>
+                {getAnswerOptions()}
               </select>
             </div>
-            {/* Add more form elements as needed */}
+            <div className="form-group">
+              <label>Score</label>
+              <input
+                type="number"
+                className="form-control"
+                value={updatedQuestion?.score || ""}
+                onChange={(e) =>
+                  setUpdatedQuestion({
+                    ...updatedQuestion,
+                    score: e.target.value,
+                  })
+                }
+              />
+            </div>
           </div>
           <div className="modal-footer">
             <button

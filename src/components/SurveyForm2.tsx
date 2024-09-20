@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { postAns } from "../services/api/apiData";
 import "./SurveyForm.css";
 import SurveyQuestion from "./SurveyQuestion";
-
+import { Riple } from "react-loading-indicators";
 interface SurveyFormProps {
   questions: Array<{
     question: string;
@@ -51,6 +51,7 @@ function SurveyForm2({
   const [formValues1, setFormValues1] = useState<FormValues>({});
   const [formValues2, setFormValues2] = useState<FormValues>({});
   const [errors, setErrors] = useState<FormValues>({});
+  const [isLoading, setIsLoading] = useState(false);
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     section: number
@@ -199,14 +200,15 @@ function SurveyForm2({
     );
 
     const ans1 = questions1.map(
-      (_, index) => Number(formValues[`question1_${index + 1}`]) || 0
+      (_, index) => Number(formValues1[`question1_${index + 1}`]) || 0
     );
 
     const ans2 = questions2.map(
-      (_, index) => Number(formValues[`question2_${index + 1}`]) || 0
+      (_, index) => Number(formValues2[`question2_${index + 1}`]) || 0
     );
     const userId = sessionStorage.getItem("userId") || "";
     console.log(userId);
+    setIsLoading(true);
     try {
       await postAns({
         // pq,
@@ -234,6 +236,7 @@ function SurveyForm2({
       sessionStorage.setItem(sessionName[0], getScore.toString());
       sessionStorage.setItem(sessionName[1], getScore1.toString());
       sessionStorage.setItem(sessionName[2], getScore2.toString());
+      setIsLoading(false);
       navigate("/success2");
     } catch (error) {
       console.error("Error posting answers:", error);
@@ -282,11 +285,25 @@ function SurveyForm2({
               section_num={2}
             />
           </div>
-        </div>
+        </div>{" "}
         <div className="row justify-content-center">
-          <button type="submit" className="btn btn-primary mt-4 col-md-4 mb-3">
-            Submit
-          </button>
+          {isLoading ? (
+            <div className="riple-sect text-center">
+              <Riple
+                color="#32cd32"
+                size="medium"
+                text="Loading"
+                textColor=""
+              />
+            </div>
+          ) : (
+            <button
+              type="submit"
+              className="btn btn-primary mt-4 col-md-4 mb-4"
+            >
+              Submit
+            </button>
+          )}
         </div>
       </form>
     </>

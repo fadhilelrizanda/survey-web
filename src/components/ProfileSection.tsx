@@ -5,7 +5,7 @@ function ProfileSection() {
   return (
     <>
       <div className="row profile-section-wrapper">
-        <div className="col-md-5">
+        <div className="col-md-5 col-12">
           <img src={fkgImage} alt="FKG Unbrah" className="img-fluid col-12" />
         </div>
         <div className="col-md-7 desc col-12">

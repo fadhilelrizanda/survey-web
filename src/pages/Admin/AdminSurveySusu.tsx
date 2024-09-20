@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
 import Sidebar from "../../components/Sidebar";
@@ -10,11 +11,13 @@ import {
   updateQuestion,
   gettAllAns,
   deleteAns,
+  deleteUser,
 } from "../../services/api/apiData";
 import Chart from "chart.js/auto";
 import { CategoryScale } from "chart.js";
-import PieChart from "../../components/PieChart";
-import StackedBarChart from "../../components/StackedBarChart";
+import VisualGraph from "./VisualGraph";
+import TableAns from "./TableAns";
+import TableQuestions from "./TableQuestions";
 
 Chart.register(CategoryScale);
 
@@ -24,6 +27,10 @@ interface AnswerData {
   ans: number[];
   score: number;
   surveyType: number;
+  user: {
+    name: string;
+    childname: string;
+  };
 }
 
 const AdminSurveySusu: React.FC = () => {
@@ -60,18 +67,6 @@ const AdminSurveySusu: React.FC = () => {
   });
 
   const surveyCode = 0;
-  const questAns = [
-    ["Tidak", "Iya"],
-    ["Tidak Pernah", "Kadang-kadang", "Selalu"],
-    [
-      "Sangat Tidak Setuju",
-      "Tidak Setuju",
-      "Kurang Setuju",
-      "Setuju",
-      "Sangat Setuju",
-    ],
-  ];
-  const questType = ["Benar/Salah", "Pilihan Ganda"];
 
   const fetchQuestions = async () => {
     try {
@@ -80,22 +75,12 @@ const AdminSurveySusu: React.FC = () => {
 
       console.log("Raw Questions Data:", data);
       console.log("Raw Answers Data:", dataAns);
-
-      console.log("test");
-      const formattedDataAns = dataAns.map((item: any) => ({
-        ...item,
-        pq: Object.fromEntries(
-          Object.entries(item.pq).map(([key, value]) => [key, value])
-        ),
-      }));
-      console.log("Formatted Answers Data:", formattedDataAns);
-
       setQuestions(data);
-      setAnswerData(formattedDataAns);
+      setAnswerData(dataAns);
 
       // Calculate the score distribution for the pie chart
       const scoreDistribution: { [key: number]: number } = {};
-      formattedDataAns.forEach((ans: AnswerData) => {
+      dataAns.forEach((ans: AnswerData) => {
         scoreDistribution[ans.score] = (scoreDistribution[ans.score] || 0) + 1;
       });
       console.log("Score Distribution:", scoreDistribution);
@@ -129,7 +114,7 @@ const AdminSurveySusu: React.FC = () => {
       ];
 
       // Count the occurrences of each answer for each question
-      formattedDataAns.forEach((ans: AnswerData) => {
+      dataAns.forEach((ans: AnswerData) => {
         ans.ans.forEach((answer, qIndex) => {
           if (qIndex < numQuestions) {
             if (answer === 0) {
@@ -171,6 +156,7 @@ const AdminSurveySusu: React.FC = () => {
   const handleDeleteAns = async (id: string) => {
     try {
       await deleteAns(id);
+      await deleteUser(id);
       fetchQuestions(); // Refresh the question list after deleting a question
     } catch (error) {
       console.error("Failed to delete question:", error);
@@ -192,6 +178,7 @@ const AdminSurveySusu: React.FC = () => {
         question: updatedQuestion.question,
         questionType: updatedQuestion.questionType,
         keyAnswer: updatedQuestion.keyAnswer,
+        score: updatedQuestion.score,
       });
 
       // Update the question in the local state
@@ -205,123 +192,52 @@ const AdminSurveySusu: React.FC = () => {
 
   return (
     <>
-      <div className="container-fluid">
-        <div className="row">
-          <Navbar />
-        </div>
-      </div>
-      <div className="container-fluid border-highlight mt-5">
+      <Navbar />
+
+      <div className="container-fluid  mt-5">
         <div className="row">
           <Sidebar />
-          <div className="col-md-10 border-highlight content">
-            <h3 className="mt-5 text-center">Survey Pemberian Susu</h3>
-            <div className="row mt-5">
-              <h4 className="text-center mt-2 mb-5">Statistic Survey</h4>
-              <div className="col-md-3">
-                <div className="graph">
-                  <PieChart
-                    chartData={pieChartData}
-                    text_data={"Statistik Persebaran Score"}
-                  />
-                </div>
-              </div>
-              <div className="col-md-8">
-                <div className="graph">
-                  <StackedBarChart data={stackedBarChartData} />
-                </div>
-              </div>
+          <div className="col-md-10 content">
+            <h3 className="mt-2 text-center">Survey 1</h3>
+            <VisualGraph
+              pieChartData={pieChartData}
+              stackedBarChartData={stackedBarChartData}
+            />
+
+            <div className="row mt-5 justify-content-center">
+              <button className="btn btn-primary mb-4">List Data</button>
+              <TableAns
+                answerData={answerData}
+                handleDeleteAns={handleDeleteAns}
+              />
             </div>
-
-            <button className="btn btn-primary">List Data</button>
-            <table className="table table-striped table-hover">
-              <thead>
-                <tr>
-                  <th scope="col">No.</th>
-                  <th scope="col">Data personal</th>
-                  {/* <th scope="col">Jawaban</th> */}
-                  <th scope="col">Score</th>
-                  {/* <th scope="col">Survey</th> */}
-                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {answerData.map((ans, index) => (
-                  <tr key={ans._id}>
-                    <td>{index + 1}.</td>
-                    <td>
-                      {Object.entries(ans.pq).map(([key, value]) => (
-                        <div key={key}>
-                          <strong>{key}:</strong> {value}
-                        </div>
-                      ))}
-                    </td>
-
-                    <td>{ans.score}</td>
-
-                    <td>
-                      {" "}
-                      <button
-                        onClick={() => handleDeleteAns(ans._id)}
-                        className="btn btn-danger"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-
             {loading && <p>Loading questions...</p>}
             {error && <p>{error}</p>}
             {!loading && !error && (
               <>
-                <button className="btn btn-primary mt-5">
-                  List Pertanyaan
-                </button>
-                <table className="table table-striped table-hover">
-                  <thead>
-                    <tr>
-                      <th scope="col">No.</th>
-                      <th scope="col">Pertanyaan</th>
-                      <th scope="col">Jenis Pertanyaan</th>
-                      <th scope="col">Jawaban</th>
-                      <th scope="col">score</th>
-                      <th scope="col">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {questions.map((question, index) => (
-                      <tr key={question._id}>
-                        <td>{index + 1}.</td>
-                        <td>{question.question}</td>
-                        <td>{questType[question.questionType]}</td>
-                        <td>
-                          {questAns[question.questionType][question.keyAnswer]}
-                        </td>
-                        <td>{question.score}</td>
-                        <td>
-                          <button
-                            onClick={() => handleDelete(question._id)}
-                            className="btn btn-danger"
-                          >
-                            Delete
-                          </button>
-                          <button
-                            onClick={() => handleUpdate(question)}
-                            className="btn btn-warning"
-                          >
-                            Update
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-                <QuestionEntry
-                  onAddQuestion={handleAddQuestion}
-                  surveyType={0}
-                />
+                <div className="row justify-content-center">
+                  <button className="btn btn-primary mt-5 mb-4">
+                    List Pertanyaan
+                  </button>
+                  <div className="col-md-10">
+                    <TableQuestions
+                      questions={questions}
+                      handleDelete={handleDelete}
+                      handleUpdate={handleUpdate}
+                    />
+                  </div>
+                </div>
+                <div className="row justify-content-center">
+                  <button className="btn btn-primary mt-5 mb-4">
+                    Form Pertanyaan
+                  </button>
+                  <div className="col-md-10">
+                    <QuestionEntry
+                      onAddQuestion={handleAddQuestion}
+                      surveyType={0}
+                    />
+                  </div>
+                </div>
               </>
             )}
           </div>

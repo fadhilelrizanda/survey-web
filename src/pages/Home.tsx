@@ -46,7 +46,7 @@ function Home() {
                   untuk membantu anak-anak tumbuh dengan senyum sehat
                 </p>
                 <a href="#survey">
-                  <button className="btn btn-primary btn-round">
+                  <button className="btn btn-primary btn-round btnHome">
                     Lakukan Survey
                   </button>
                 </a>
@@ -66,16 +66,6 @@ function Home() {
           </h4>
           <div className="row">
             <div className="col-md-8  mx-auto">
-              {/* <p>
-                Kami melakukan beberapa survei terkait pemberian susu formula,
-                menyikat gigi, dan pola asuh orang tua terhadap kesehatan gigi
-                anak. Survei ini bertujuan untuk memahami kebiasaan dan
-                pengetahuan orang tua dalam merawat kesehatan gigi anak-anak
-                mereka. Data yang dikumpulkan akan membantu dalam merancang
-                program edukasi dan intervensi yang lebih efektif. Partisipasi
-                Anda sangat penting dalam upaya meningkatkan kesehatan gigi
-                anak-anak di masyarakat.
-              </p> */}
             </div>
           </div>
           <CardSurvey

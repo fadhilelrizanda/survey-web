@@ -16,14 +16,20 @@ import AdminSurveySusu from "./pages/Admin/AdminSurveySusu";
 import { AdminMenyikatGigi } from "./pages/Admin/AdminMenyikat";
 import { AdminMenyikat2 } from "./pages/Admin/AdminMenyikat2";
 import Survey3 from "./pages/Survey/Survey3";
+import ProtectedAdmin from "./pages/Admin/ProtectedAdmin";
+import LoginAdmin from "./pages/Admin/LoginAdmin";
 
 const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-
+  const [isAdmin, setAdmin] = useState<boolean>(false);
   const handleLogin = (status: boolean) => {
     setIsAuthenticated(status);
     localStorage.setItem("isAuthenticated", JSON.stringify(status));
+  };
+  const handleLoginAdmin = (status: boolean) => {
+    setAdmin(status);
+    localStorage.setItem("isAdmin", JSON.stringify(status));
   };
 
   useEffect(() => {
@@ -31,6 +37,8 @@ const App: React.FC = () => {
     const timer = setTimeout(() => {
       const storedAuthStatus = localStorage.getItem("isAuthenticated");
       setIsAuthenticated(storedAuthStatus === "true");
+      const storedAdminStatus = localStorage.getItem("isAdmin");
+      setAdmin(storedAdminStatus === "true");
       setIsLoading(false);
     }, 3000); // Adjust the timeout as needed
 
@@ -46,6 +54,10 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
             <Route
+              path="/admin/login"
+              element={<LoginAdmin onLogin={handleLoginAdmin} />}
+            />
+            <Route
               path="/admin"
               element={
                 <ProtectedRoute isAuthenticated={isAuthenticated}>
@@ -54,15 +66,15 @@ const App: React.FC = () => {
               }
             />
             <Route
-              path="/admin/survey susu"
+              path="/admin/survey1"
               element={
-                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <ProtectedAdmin isAdmin={isAdmin}>
                   <AdminSurveySusu />
-                </ProtectedRoute>
+                </ProtectedAdmin>
               }
             />
             <Route
-              path="/admin/survey gigi"
+              path="/admin/survey2"
               element={
                 <ProtectedRoute isAuthenticated={isAuthenticated}>
                   <AdminMenyikatGigi />
@@ -71,7 +83,7 @@ const App: React.FC = () => {
             />
 
             <Route
-              path="/admin/survey2"
+              path="/admin/survey3"
               element={
                 <ProtectedRoute isAuthenticated={isAuthenticated}>
                   <AdminMenyikat2 />

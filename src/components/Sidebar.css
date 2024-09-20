@@ -4,15 +4,13 @@
 
 .vertical-menu {
     width: 200px; /* Set a width if you like */
-    font-family: "Roboto", sans-serif;
     font-size: 14px;
     font-weight: 400;
     font-style: normal;
-    letter-spacing: 2px;
   }
   
   .vertical-menu a {
-    background-color: #3fa2f6;
+    background-color: #d1e9f6;
     color: black; /* Black text color */
     display: block; /* Make the links appear below each other */
     padding: 12px; /* Add some padding */

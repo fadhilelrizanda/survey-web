@@ -75,10 +75,11 @@ export const updateQuestion = async (
     question: string;
     questionType: string;
     keyAnswer: string;
+    score: number;
   }
 ) => {
   try {
-    const response = await api.patch(`/surveyasuh/update/${id}`, data); // Ensure the endpoint matches your API route
+    const response = await api.patch(`/question/update/${id}`, data); // Ensure the endpoint matches your API route
     return response.data;
   } catch (error) {
     console.error("Error updating data:", error);
@@ -121,8 +122,8 @@ export const updateUserSurvey = async (
 // Function for POST request
 export const postPersonalQuestion = async (data: {
   question: string;
-  questionType: Number;
-  surveyType: Number;
+  questionType: number;
+  surveyType: number;
 }) => {
   try {
     const response = await api.post(`/personalQuest/post`, data); // Ensure the endpoint matches your API route
@@ -152,7 +153,7 @@ export const postAns = async (data: {
 export const gettAllAns = async (surveyType: number) => {
   try {
     // Pass surveyType as a query parameter
-    const response = await api.get(`/answer/getAll`, {
+    const response = await api.get(`/answer/getAllAns`, {
       params: { surveyType }, // This will be appended to the URL as a query string
     });
     return response.data;
@@ -179,6 +180,16 @@ export const getAllQuestion = async (surveyType: number) => {
 export const deleteAns = async (id: string) => {
   try {
     const response = await api.delete(`/answer/delete/${id}`); // Ensure the endpoint matches your API route
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting data:", error);
+    throw error;
+  }
+};
+
+export const deleteUser = async (id: string) => {
+  try {
+    const response = await api.delete(`/users/delete/${id}`); // Ensure the endpoint matches your API route
     return response.data;
   } catch (error) {
     console.error("Error deleting data:", error);

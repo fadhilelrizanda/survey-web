@@ -5,6 +5,7 @@ import { postAns } from "../services/api/apiData";
 import "./SurveyForm.css";
 import TextInput from "./PersonalQuest/TextInput";
 import RadioInput from "./PersonalQuest/RadioInput";
+import { Riple } from "react-loading-indicators";
 
 interface SurveyFormProps {
   questions: Array<{
@@ -38,6 +39,7 @@ function SurveyForm3({ questions, questions1, questions2 }: SurveyFormProps) {
   const [formValues1, setFormValues1] = useState<FormValues>({});
   const [formValues2, setFormValues2] = useState<FormValues>({});
   const [errors, setErrors] = useState<FormValues>({});
+  const [isLoading, setIsloading] = useState(false);
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     section: number
@@ -127,6 +129,7 @@ function SurveyForm3({ questions, questions1, questions2 }: SurveyFormProps) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("submit");
+    setIsloading(true);
 
     if (!validateForm()) return;
 
@@ -218,6 +221,7 @@ function SurveyForm3({ questions, questions1, questions2 }: SurveyFormProps) {
         surveyType: 222,
         userId: userId,
       });
+      setIsloading(false);
       sessionStorage.setItem("s2Score", getScore.toString());
       sessionStorage.setItem("s22Score", getScore1.toString());
       sessionStorage.setItem("s222Score", getScore2.toString());
@@ -362,10 +366,13 @@ function SurveyForm3({ questions, questions1, questions2 }: SurveyFormProps) {
           )}
         </div>
       ))}
-
-      <button type="submit" className="btn btn-primary mt-4">
-        Submit
-      </button>
+      {isLoading ? (
+        <Riple color="#32cd32" size="medium" text="Loading" textColor="" />
+      ) : (
+        <button type="submit" className="btn btn-primary mt-4">
+          Submit
+        </button>
+      )}
     </form>
   );
 }

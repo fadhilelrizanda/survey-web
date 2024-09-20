@@ -5,10 +5,10 @@ function Sidebar() {
     <>
       <div className="col-md-2 sidebar">
         <div className="vertical-menu">
-          <Link to="/admin/survey susu">Survey Pemberian Susu Formula</Link>
+          <Link to="/admin/survey1">Survey 1</Link>
           {/* <Link to="/admin/survey pola asuh">Survey Pola Asuh</Link> */}
-          <Link to="/admin/survey gigi">Survey Menyikat Gigi</Link>
-          <Link to="/admin/survey2">Survey Pemberian Susu C</Link>
+          <Link to="/admin/survey2">Survey 2</Link>
+          <Link to="/admin/survey3">Survey 3</Link>
         </div>
       </div>
     </>
