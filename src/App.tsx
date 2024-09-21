@@ -60,9 +60,9 @@ const App: React.FC = () => {
             <Route
               path="/admin"
               element={
-                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <ProtectedAdmin isAdmin={isAdmin}>
                   <AdminSurveySusu />
-                </ProtectedRoute>
+                </ProtectedAdmin>
               }
             />
             <Route
@@ -76,9 +76,9 @@ const App: React.FC = () => {
             <Route
               path="/admin/survey2"
               element={
-                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <ProtectedAdmin isAdmin={isAdmin}>
                   <AdminMenyikatGigi />
-                </ProtectedRoute>
+                </ProtectedAdmin>
               }
             />
 
