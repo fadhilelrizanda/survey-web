@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
 import Sidebar from "../../components/Sidebar";
@@ -118,6 +119,7 @@ const AdminPolaAsuh: React.FC = () => {
         question: updatedQuestion.question,
         questionType: updatedQuestion.questionType,
         keyAnswer: updatedQuestion.keyAnswer,
+        score: updatedQuestion.score,
       });
 
       // Update the question in the local state
