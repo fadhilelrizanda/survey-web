@@ -36,3 +36,11 @@ div .sub-survey {
   box-shadow: 20px 20px 60px #c8c8c8, -20px -20px 60px #ffffff;
   padding: 50px 100px 100px 100px;
 }
+
+
+@media (max-width: 768px) {
+  div .sub-survey
+  {
+    padding: 10px 40px 20px 40px;
+  }
+}

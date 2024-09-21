@@ -138,11 +138,11 @@ function SurveyForm({ questions, surveyType }: SurveyFormProps) {
   return (
     <form onSubmit={handleSubmit}>
       <div className="row justify-content-center">
-        <div className="col-md-8 sub-survey">
+        <div className="col-md-8 sub-survey col-12">
           <h2 className="text-center">Survey A</h2>
           {questions.map((q, index) => (
             <div key={index} className="form-group mt-4">
-              <label>
+              <label className="mb-3">
                 {index + 1}. {q.question}
               </label>
               {q.questionType === 2 ? (

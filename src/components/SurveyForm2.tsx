@@ -248,7 +248,7 @@ function SurveyForm2({
     <>
       <form onSubmit={handleSubmit}>
         <div className="row justify-content-center">
-          <div className="col-md-8 sub-survey">
+          <div className="col-md-8 col-12 sub-survey">
             <h2>{surveyName[0]}</h2>
             <SurveyQuestion
               questions={questions}

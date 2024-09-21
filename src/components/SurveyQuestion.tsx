@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import "react-circular-progressbar/dist/styles.css";
 import RadioInput from "./PersonalQuest/RadioInput";
 interface SurveyQuestionProp {

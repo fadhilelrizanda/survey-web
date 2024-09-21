@@ -17,9 +17,12 @@ const RadioInput: React.FC<RadioInputProps> = ({
 }) => {
   return (
     <>
-      <div className="radio-group">
+      <div className="radio-group row">
         {options.map((option) => (
-          <div key={option.value} className="custom-radio">
+          <div
+            key={option.value}
+            className="col-12 col-sm-6 col-md-4 col-md-2 col-md-3 col-lg-3 mb-2 d-flex align-items-center custom-radio"
+          >
             <input
               className="form-check-input"
               type="radio"
