@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Splash from "./components/Splash";
 import Home from "./pages/Home";
 import { Routes, Route } from "react-router-dom";
-import Survey from "./pages/Survey";
+// import Survey from "./pages/Survey";
 import SurveySusu from "./pages/Survey/Survey1";
 import SurveySikat from "./pages/Survey/Survey2";
 import SurveyAsuh from "./pages/Survey/SurveyAsuh";
@@ -85,13 +85,13 @@ const App: React.FC = () => {
             <Route
               path="/admin/survey3"
               element={
-                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <ProtectedAdmin isAdmin={isAdmin}>
                   <AdminMenyikat2 />
-                </ProtectedRoute>
+                </ProtectedAdmin>
               }
             />
             <Route path="/" element={<Home />} />
-            <Route path="/survey" element={<Survey />} />
+            {/* <Route path="/survey" element={<Survey />} /> */}
             <Route
               path="/surveya"
               element={
