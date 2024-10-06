@@ -18,6 +18,7 @@ import { CategoryScale } from "chart.js";
 import VisualGraph from "./VisualGraph";
 import TableAns from "./TableAns";
 import TableQuestions from "./TableQuestions";
+import { downloadExcel } from "../../utils/utils";
 
 Chart.register(CategoryScale);
 
@@ -189,6 +190,10 @@ const AdminSurveySusu: React.FC = () => {
       console.error("Failed to update question:", error);
     }
   };
+  const handleDownload = () => {
+    const surveyType = 0;
+    downloadExcel(surveyType);
+  };
 
   return (
     <>
@@ -198,6 +203,9 @@ const AdminSurveySusu: React.FC = () => {
         <div className="row">
           <Sidebar />
           <div className="col-md-10 content">
+            <button className="btn btn-primary" onClick={handleDownload}>
+              Download Survey Data
+            </button>
             <h3 className="mt-2 text-center">Survey 1</h3>
             <VisualGraph
               pieChartData={pieChartData}
@@ -219,6 +227,7 @@ const AdminSurveySusu: React.FC = () => {
                   <button className="btn btn-primary mt-5 mb-4">
                     List Pertanyaan
                   </button>
+
                   <div className="col-md-10">
                     <TableQuestions
                       questions={questions}

@@ -156,6 +156,7 @@ export const gettAllAns = async (surveyType: number) => {
     const response = await api.get(`/answer/getAllAns`, {
       params: { surveyType }, // This will be appended to the URL as a query string
     });
+    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching data:", error);

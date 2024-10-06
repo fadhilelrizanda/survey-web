@@ -18,6 +18,7 @@ import { CategoryScale } from "chart.js";
 import TableAns from "./TableAns";
 import TableQuestions from "./TableQuestions";
 import VisualGraph from "./VisualGraph";
+import { downloadExcel } from "../../utils/utils";
 
 Chart.register(CategoryScale);
 
@@ -323,6 +324,17 @@ export const AdminMenyikatGigi: React.FC = () => {
       console.error("Failed to delete question:", error);
     }
   };
+  const handleDownload = () => {
+    downloadExcel(surveyCode);
+  };
+
+  const handleDownload1 = () => {
+    downloadExcel(surveyCode1);
+  };
+
+  const handleDownload2 = () => {
+    downloadExcel(surveyCode2);
+  };
 
   const handleDeleteAns = async (id: string) => {
     try {
@@ -376,6 +388,27 @@ export const AdminMenyikatGigi: React.FC = () => {
           <Sidebar />
           <div className="col-md-10 ">
             <div className="row content mb-5">
+              <div className="row">
+                <button
+                  className="btn btn-primary col"
+                  onClick={handleDownload}
+                >
+                  Download Survey Data 1
+                </button>
+                <button
+                  className="btn btn-primary col"
+                  onClick={handleDownload1}
+                >
+                  Download Survey Data 2
+                </button>
+                <button
+                  className="btn btn-primary col"
+                  onClick={handleDownload2}
+                >
+                  Download Survey Data 3
+                </button>
+              </div>
+
               <h3 className="mt-5 text-center">Survey 2</h3>
               <VisualGraph
                 pieChartData={pieChartData}
