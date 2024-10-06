@@ -79,7 +79,7 @@ export const downloadExcel = async (surveyType: number) => {
 
     console.log("Excel file downloaded successfully.");
   } catch (error) {
-    console.error("Error fetching or downloading data:", error.message);
+    console.error("Error fetching or downloading data:");
     throw error;
   }
 };
