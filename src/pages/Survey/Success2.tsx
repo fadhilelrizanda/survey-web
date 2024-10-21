@@ -1,5 +1,5 @@
 import Navbar from "../../components/Navbar";
-import React, { useState } from "react";
+import { useState } from "react";
 import "react-circular-progressbar/dist/styles.css";
 import "./Success.css";
 import imgTeeth from "../../assets/images/teeth.jpg"; // Example image
