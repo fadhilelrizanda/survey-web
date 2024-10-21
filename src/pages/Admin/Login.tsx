@@ -12,6 +12,10 @@ interface LoginProps {
 }
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
+  const blankWhiteImage =
+    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAgMBA0cfHZkAAAAASUVORK5CYII=";
+  const useBlankImage = true; // Set to true to use blank white images
+
   const [username, setUsername] = useState("");
   const [childname, setChildname] = useState("");
   const [placeBirth, setPlaceBirth] = useState("");
@@ -223,7 +227,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                       <div className="col-md-4">
                         <div className="card">
                           <img
-                            src={imgDentist}
+                            src={useBlankImage ? blankWhiteImage : imgDentist}
                             className="card-img-top"
                             alt="..."
                           />

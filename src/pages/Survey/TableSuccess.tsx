@@ -13,24 +13,13 @@ function TableSuccess() {
         </thead>
         <tbody>
           <tr>
-            <td>0 - 20</td>
-            <td>Sangat Beresiko</td>
+            <td>0 - 70</td>
+            <td>Beresiko</td>
           </tr>
+
           <tr>
-            <td>21 - 40</td>
-            <td>Kurang Baik</td>
-          </tr>
-          <tr>
-            <td>41 - 60</td>
-            <td>Cukup</td>
-          </tr>
-          <tr>
-            <td>61 - 80</td>
-            <td>Baik</td>
-          </tr>
-          <tr>
-            <td>81 - 100</td>
-            <td>Sangat Baik</td>
+            <td>70 - 100</td>
+            <td>Tidak Beresiko</td>
           </tr>
         </tbody>
       </table>

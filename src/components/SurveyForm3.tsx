@@ -40,6 +40,7 @@ function SurveyForm3({ questions, questions1, questions2 }: SurveyFormProps) {
   const [formValues2, setFormValues2] = useState<FormValues>({});
   const [errors, setErrors] = useState<FormValues>({});
   const [isLoading, setIsloading] = useState(false);
+  const [formInvalid, setFormInvalid] = useState(false);
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     section: number
@@ -91,7 +92,7 @@ function SurveyForm3({ questions, questions1, questions2 }: SurveyFormProps) {
         isValid = false;
       }
     });
-
+    setFormInvalid(!isValid);
     setErrors(newErrors);
     return isValid;
   };
@@ -372,6 +373,11 @@ function SurveyForm3({ questions, questions1, questions2 }: SurveyFormProps) {
         <button type="submit" className="btn btn-primary mt-4">
           Submit
         </button>
+      )}
+      {formInvalid && (
+        <p className="text-danger mt-2">
+          Please fill out all the required fields.
+        </p>
       )}
     </form>
   );

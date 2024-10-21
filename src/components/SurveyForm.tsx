@@ -28,6 +28,7 @@ interface FormValues {
 
 function SurveyForm({ questions, surveyType }: SurveyFormProps) {
   const navigate = useNavigate();
+  const [formInvalid, setFormInvalid] = useState(false);
   // const [score, setScore] = useState<number>(0);
   const [formValues, setFormValues] = useState<FormValues>({});
   const [errors, setErrors] = useState<FormValues>({});
@@ -60,7 +61,7 @@ function SurveyForm({ questions, surveyType }: SurveyFormProps) {
         isValid = false;
       }
     });
-
+    setFormInvalid(!isValid);
     setErrors(newErrors);
     return isValid;
   };
@@ -78,10 +79,9 @@ function SurveyForm({ questions, surveyType }: SurveyFormProps) {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsloading(true);
 
     if (!validateForm()) return;
-
+    setIsloading(true);
     const correctAnswers = questions.reduce((acc, q, index) => {
       acc[`question${index + 1}`] = q.keyAnswer;
       return acc;
@@ -178,6 +178,11 @@ function SurveyForm({ questions, surveyType }: SurveyFormProps) {
           <button type="submit" className="btn btn-primary mt-4 col-md-4 mb-4">
             Submit
           </button>
+        )}
+        {formInvalid && (
+          <p className="text-danger mt-2">
+            Please fill out all the required fields.
+          </p>
         )}
       </div>
     </form>

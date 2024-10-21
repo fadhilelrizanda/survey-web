@@ -17,7 +17,9 @@ const LoginAdmin: React.FC<LoginAdminProps> = ({ onLogin }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-  console.log(from);
+  const blankWhiteImage =
+    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAgMBA0cfHZkAAAAASUVORK5CYII=";
+  const useBlankImage = true; // Set to true to use blank white images
 
   useEffect(() => {}, []);
 
@@ -98,7 +100,7 @@ const LoginAdmin: React.FC<LoginAdminProps> = ({ onLogin }) => {
                       <div className="col-md-4">
                         <div className="card">
                           <img
-                            src={imgDentist}
+                            src={useBlankImage ? blankWhiteImage : imgDentist}
                             className="card-img-top"
                             alt="..."
                           />

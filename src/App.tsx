@@ -5,7 +5,6 @@ import { Routes, Route } from "react-router-dom";
 // import Survey from "./pages/Survey";
 import SurveySusu from "./pages/Survey/Survey1";
 import SurveySikat from "./pages/Survey/Survey2";
-import SurveyAsuh from "./pages/Survey/SurveyAsuh";
 
 import Success from "./pages/Survey/Success1";
 import SuccessSikat from "./pages/Survey/Success2";
@@ -116,11 +115,30 @@ const App: React.FC = () => {
                 </ProtectedRoute>
               }
             />
-            <Route path="/surveyb" element={<SurveySikat />} />
-            <Route path="/surveyc" element={<SurveyAsuh />} />
-            <Route path="/success" element={<Success />} />
-            <Route path="/success2" element={<SuccessSikat />} />
-            <Route path="/success3" element={<SuccessSikat />} />
+            <Route
+              path="/success"
+              element={
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  <Success />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/success2"
+              element={
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  <SuccessSikat />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/success3"
+              element={
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  <SuccessSikat />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </div>
       )}

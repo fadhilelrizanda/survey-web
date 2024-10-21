@@ -9,6 +9,10 @@ import "./Home.css";
 import ProfileSection from "../components/ProfileSection";
 import Footer from "../components/Footer";
 function Home() {
+  const blankWhiteImage =
+    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAgMBA0cfHZkAAAAASUVORK5CYII=";
+  const useBlankImage = true; // Set to true to use blank white images
+
   const text_susu =
     "Pemberian susu formula merupakan bagian penting dalam pola makan anak-anak, terutama di usia dini. Melalui survey ini, kami ingin memahami lebih dalam mengenai kebiasaan pemberian susu formula kepada anak-anak dan bagaimana hal ini memengaruhi kesehatan gigi mereka.";
   console.log(sessionStorage.getItem("userId"));
@@ -53,7 +57,10 @@ function Home() {
               </div>
             </div>
             <div className="col-md-7 col-12 hero-img  mt-5 order-0 order-md-1">
-              <img src={ImgHero} className="img-fluid " />
+              <img
+                src={useBlankImage ? blankWhiteImage : ImgHero}
+                className="img-fluid "
+              />
             </div>
           </div>
         </div>
@@ -65,8 +72,7 @@ function Home() {
             Survey Kesehatan Gigi
           </h4>
           <div className="row">
-            <div className="col-md-8  mx-auto">
-            </div>
+            <div className="col-md-8  mx-auto"></div>
           </div>
           <CardSurvey
             title={"Survey Pemberian Susu Formula"}
@@ -108,7 +114,7 @@ function Home() {
           <Gmaps />
         </div>
       </div>
-      <div className="container-fluid">
+      <div>
         <Footer />
       </div>
     </>

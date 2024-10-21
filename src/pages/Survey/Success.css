@@ -8,3 +8,10 @@
   justify-self: center;
   align-self: center;
 }
+.clickable-image {
+  transition: opacity 0.3s ease;
+}
+
+.clickable-image:hover {
+  opacity: 0.8; /* Change opacity on hover for visual feedback */
+}

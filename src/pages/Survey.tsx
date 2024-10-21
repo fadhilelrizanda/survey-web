@@ -5,6 +5,10 @@ import imgMilk from "../assets/images/survey/Milk.jpg";
 import imgParenting from "../assets/images/survey/parenting.png";
 import imgTeeth from "../assets/images/survey/Teeth.png";
 function Survey() {
+  const blankWhiteImage =
+    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wcAAgMBA0cfHZkAAAAASUVORK5CYII=";
+  const useBlankImage = true; // Set to true to use blank white images
+
   return (
     <>
       <div className="container-fluid">
@@ -16,7 +20,11 @@ function Survey() {
         <div className="row card-survey justify-content-center mt-5">
           <h3 className="mb-5">Pilih survey yang ingin anda lakukan</h3>
           <div className="card col-3 mx-3">
-            <img className="card-img-top" src={imgMilk} alt="Card image cap" />
+            <img
+              className="card-img-top"
+              src={useBlankImage ? blankWhiteImage : imgMilk}
+              alt="Card image cap"
+            />
             <div className="card-body">
               <h4>Survey Pemberian Susu Formula</h4>
               <p className="card-text">
@@ -44,7 +52,7 @@ function Survey() {
           <div className="card col-3 mx-3">
             <img
               className="card-img-top"
-              src={imgParenting}
+              src={useBlankImage ? blankWhiteImage : imgParenting}
               alt="Card image cap"
             />
             <div className="card-body">
@@ -59,7 +67,11 @@ function Survey() {
             </div>
           </div>
           <div className="card col-3 mx-3">
-            <img className="card-img-top" src={imgTeeth} alt="Card image cap" />
+            <img
+              className="card-img-top"
+              src={useBlankImage ? blankWhiteImage : imgTeeth}
+              alt="Card image cap"
+            />
             <div className="card-body">
               <h4>Survey Pola Asuh Orang Tua 2</h4>
               <p className="card-text">

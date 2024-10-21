@@ -17,9 +17,9 @@ function SuccessSikat() {
       <Navbar />
       <div className="container">
         <div className="row justify-content-center">
-          <CardSuccess title="Test" data_score={data_score1} />
-          <CardSuccess title="Test 2" data_score={data_score11} />
-          <CardSuccess title="Test 2" data_score={data_score111} />
+          <CardSuccess title="Keterangan Nilai" data_score={data_score1} />
+          <CardSuccess title="Keterangan Nilai" data_score={data_score11} />
+          <CardSuccess title="Keterangan Nilai" data_score={data_score111} />
         </div>
       </div>
     </>
