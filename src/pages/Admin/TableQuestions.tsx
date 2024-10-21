@@ -9,6 +9,7 @@ interface QuestionProps {
 interface TableQuestionsProps {
   questions: QuestionProps[];
   handleDelete: (id: string) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleUpdate: any;
 }
 
