@@ -8,6 +8,7 @@ import SurveySikat from "./pages/Survey/Survey2";
 
 import Success from "./pages/Survey/Success1";
 import SuccessSikat from "./pages/Survey/Success2";
+import SuccessSikat3 from "./pages/Survey/Success3";
 import ProtectedRoute from "./pages/Admin/ProtectedRoute";
 import Login from "./pages/Admin/Login";
 import AdminSurveySusu from "./pages/Admin/AdminSurveySusu";
@@ -135,7 +136,7 @@ const App: React.FC = () => {
               path="/success3"
               element={
                 <ProtectedRoute isAuthenticated={isAuthenticated}>
-                  <SuccessSikat />
+                  <SuccessSikat3 />
                 </ProtectedRoute>
               }
             />

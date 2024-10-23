@@ -10,9 +10,11 @@ export const logout = () => {
 };
 
 export const getDescription = (score: number) => {
-  if (score >= 0 && score <= 70) {
-    return "Beresiko";
-  } else if (score > 70 && score <= 100) {
+  if (score < 56) {
+    return "Tidak Baik (Beresiko)";
+  } else if (score > 55 && score <= 76) {
+    return "Kurang Baik (Beresiko)";
+  } else if (score > 76 && score <= 100) {
     return "Tidak Beresiko";
   } else {
     return "Nilai tidak valid";
